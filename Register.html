@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>
+        Register
+    </title>
+</head>
+<style>
+    img {
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+        width: 100px;
+        border-radius: 50px;
+    }
+    
+    body {
+        text-align: center;
+    }
+</style>
+<script src="login.js"></script>
+
+<body>
+    <img src="login.jpeg" alt="Login details">
+
+    <br>
+    <br>
+    <form action="Register.html" class="box" method="POST">
+        <label for="fname">First-Name:</label>
+        <input type="text" id="fname" name="fname">
+        <br>
+        <br>
+        <label for="lname">Last-Name:</label>
+        <input type="text" id="lname" name="lname">
+        <br>
+        <br>
+        <input type="radio" id="male" name="gender">
+        <label for="gender">Male</label>
+        <br>
+        <br>
+        <input type="radio" id="female" name="gender">
+        <label for="gender">Female</label>
+        <br>
+        <br>
+        <label for="email">E-mail:</label>
+        <input type="text" id="email" name="email">
+        <br>
+        <br>
+        <label for="Password">Password:</label>
+        <input type="password" id="Password" onclick="validate">
+        <br>
+        <br>
+        <label for="Confirm-password">Confirm-Password</label>
+        <input type="password" id="Confirm-password">
+        <input type="submit" value="Register" onclick="validate()">
+
+
+
+    </form>
+    <br>
+    <br>
+
+    <button onclick="document.location='ChooseRestaurant.html'">Choose a Restaurant</button>
+
+</body>
+
+</html>
