@@ -1,0 +1,18 @@
+{% extends 'restaurantApp/main.html' %}
+{% load static %}
+{% block content %}
+	<div class="row">
+		{% for menu_item in menu_items %}
+		<div class="col-lg-4">
+			<img class="thumbnail" src="{{menu_item.image.url}}">
+			<div class="box-element menuitem">
+				<h6><strong>{{menu_item.name}}</strong></h6>
+				<hr>
+				<p>{{menu_item.desc}}</p>
+				<a class="btn btn-outline-success" href="#">Options</a>
+				<h4 style="display: inline-block; float: right"><strong>${{menu_item.price|floatformat:2}}</strong></h4>
+			</div>
+		</div>
+		{% endfor %}
+	</div>
+{% endblock content %}
