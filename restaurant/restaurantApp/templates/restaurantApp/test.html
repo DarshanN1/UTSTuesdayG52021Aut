@@ -19,11 +19,36 @@
         background-repeat: no-repeat;
         background-size: cover;
         }
-        .hello-msg{
-            font-size: 18px;
-            color: #fff;
-            margin-right: 20px;
-        }
+        li {
+ display: block;
+ transition-duration: 0.5s;
+}
+
+li:hover {
+  cursor: pointer;
+}
+
+ul li ul {
+  visibility: hidden;
+  opacity: 0;
+  position: absolute;
+  transition: all 0.5s ease;
+  margin-top: 1rem;
+  left: 0;
+  display: none;
+}
+
+ul li:hover > ul,
+ul li ul:hover {
+  visibility: visible;
+  opacity: 1;
+  display: block;
+}
+
+ul li ul li {
+  clear: both;
+  width: 100%;
+}
     </style>
 
 </head>
@@ -38,11 +63,14 @@
             </li>
             <li><a href="{% url 'login' %}"> Login </a></li>
             <li><a href="{% url 'contact' %}"> Contact </a></li>
-			<li><a href="{% url 'restaurants' %}"> Restaurants </a></li>
             <li><a href="{% url 'menu' %}"> Menu </a></li>
             <li><a href="{% url 'home' %}"> Home </a></li>
-
-
+			<li><a href="{% url 'restaurants' %}"> Restaurants </a>
+                <ul class="dropdown">
+                    <li><a href="#">Link 1</a></li>
+                    <li><a href="#">Link 2</a></li>
+                </ul>
+            </li>
             
         </ul>
     </div>

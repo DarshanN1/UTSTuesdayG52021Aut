@@ -4,9 +4,8 @@
     "\\restaurant",
     "\\restaurantApp",
     "\\restaurantApp\\templates",
-    "\\restaurantApp\\templates\\restaurantApp",
-    "\\static\\css"
+    "\\restaurantApp\\templates\\restaurantApp"
   ],
-  "SelectedNode": "\\restaurantApp\\templates\\restaurantApp\\Menu.html",
+  "SelectedNode": "\\restaurantApp\\templates\\restaurantApp\\restaurants.html",
   "PreviewInSolutionExplorer": false
 }
