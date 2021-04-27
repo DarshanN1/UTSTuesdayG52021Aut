@@ -1,0 +1,32 @@
+{% load crispy_forms_tags %}
+{% block content %}
+
+<!--
+<div class=" date input-group" id="datetimepicker_id_datetime">
+<input class=" form-control" id="id_datetime" name="datetime" type="text" required/>
+</div>
+<script>(function () {
+$(document).ready(function() {
+$("#id_datetime").datetimepicker();
+});
+})(jQuery);
+</script>-->
+
+<div class="row justify-content-center">
+    <div class="col-6">
+        <div class="card">
+            <div class="card-body">
+                <h3>
+                    Create your booking here
+                </h3>
+                <form action="" method="post" novalidate>
+                    {% csrf_token %}
+                    {{ form|crispy }}
+                    <input type="submit" class="btn btn-secondary" value="Create"/>
+
+                </form>
+            </div>  
+          </div>
+      </div>
+</div>
+{% endblock %}

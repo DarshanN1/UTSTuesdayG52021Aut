@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+
+  <title>User Account</title>
+
+</head>
+
+<body>
+  <h1>This is your account page.</h1>
+  {% if user.is_authenticated %}
+  <!--Currently only admin is logged in, so account.html always shows username as admin.-->
+  <h2>Your name is: {{user.username}}</h2>
+  {% else %}
+  <h2>You are not logged in.</h2>
+  {% endif %}
+
+</body>
+</html>
