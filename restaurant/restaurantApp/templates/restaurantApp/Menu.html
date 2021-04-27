@@ -23,9 +23,6 @@
 	      <li class="nav-item active">
 	        <a class="nav-link" href="{% url 'home' %}">Home <span class="sr-only">(current)</span></a>
 	      </li>
-	      <li class="nav-item">
-	        <a class="nav-link" href="{% url 'login' %}">Login</a>
-	      </li>
 	      <li class="nav-item dropdown">
 	        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 	          Lunch
@@ -37,11 +34,14 @@
 	          <a class="dropdown-item" href="#">Specials</a>
 	        </div>
 	      </li>
-	      <li class="nav-item">
+	      <!--li class="nav-item">
 	        <a class="nav-link disabled" href="#">Order</a>
+	      </li-->
+		  <li class="nav-item">
+	        <a class="nav-link" href="#">Order</a>
 	      </li>
 		  <li class="nav-item">
-	        <a class="nav-link disabled" href="#">Booking</a>
+	        <a class="nav-link" href="{% url 'booking' %}">Booking</a>
 	      </li>
 	    </ul>
 	    <form class="form-inline my-2 my-lg-0">
