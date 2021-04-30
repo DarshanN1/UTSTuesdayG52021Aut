@@ -63,7 +63,7 @@
             justify-content: center;
         }
         .tradingHours {
-            border-collapse: collapse;
+            border-style: solid;
             text-align: center;
             top: 50%;
             margin-left: auto;
@@ -73,11 +73,10 @@
             border-width: 5px;
             border-radius: 10px;
             padding: 20px;
-            width: 500px;
+            width: 700px;
         }
         td, th {
             border: 1px solid White;
-            padding: 5px;
         }
 
         .footer {
@@ -109,22 +108,19 @@
             display: inline-block;
             color: #fff;
             padding: 8px 30px;
-            margin: 30px 0;
+            margin: 20px 40px 20px 40px;
             border-radius: 30px;
             transition: background 0.5s;
         }
 
         .btn:hover {
-            background: #4CAF50;
+            background: #563434;
             color: #fff;
             padding: 8px 30px;
-            margin: 30px 0;
+            margin: 20px 40px 20px 40px;
             border-radius: 30px;
             transition: background 0.5s;
-        }
-        .btn:hover {
-            background: #563434;
-        }
+        }      
     </style>
 
 </head>
@@ -138,14 +134,13 @@
                 </a>
             </li>
             <li><a href="{% url 'login' %}"> Login </a></li>
-            <li><a href="{% url 'contact' %}"> Contact </a></li>
+            <li><a href="#contact"> Contact </a></li>
+            <li><a href="{% url 'booking' %}"> Booking </a></li>
             <li><a href="{% url 'menu' %}"> Menu </a></li>
             <li><a href="{% url 'home' %}"> Home </a></li>
-
-
-
         </ul>
     </div>
+
     <div class="aboutPage">
         <div class="midtext">
             <h1> About Us </h1>
@@ -153,40 +148,40 @@
             <p>and so I will fill this with random words. </p>
         </div>
     </div>
-    <br><br><br><br><br><br><br><br><br><br><br><br>
+    <br><br><br><br><br><br>
     <div class="tradingHours">
         <table style="width:100%">
             <tr>
                 <th>
-                    <h3>Opening times</h3>  <br> 
-                    Monday 9:00AM-11:00PM   <br> 
-                    Tuesday 9:00AM-11:00PM  <br> 
-                    Wednesday 9:00AM-11:00PM<br> 
-                    Thursday 9:00AM-11:00PM <br> 
-                    Friday 9:00AM-11:00PM   <br> 
-                    Saturday 9:00AM-11:00PM <br> 
+                    <h3>Opening times</h3>  <br>
+                    Monday 9:00AM-11:00PM   <br>
+                    Tuesday 9:00AM-11:00PM  <br>
+                    Wednesday 9:00AM-11:00PM<br>
+                    Thursday 9:00AM-11:00PM <br>
+                    Friday 9:00AM-11:00PM   <br>
+                    Saturday 9:00AM-11:00PM <br>
                     Sunday Closed           <br><br>
                 </th>
                 <td>
-                    <h3>Address</h3>        <br><br><br>
+                    <h3>Address</h3>        <br><br><br><b>
                     15 Broadway,            <br>
-                    Ultimo NSW 2007         <br><br><br><br><br></td>
+                    Ultimo NSW 2007         <br><br><br><br><br></b>
+                </td>
             </tr>
             <tr>
                 <th style="text-align: center;" colspan="5">
-                <a href="{% url 'menu' %}" class="btn">View Menu</a></th>
-            </tr>
-            <tr>
-                <th style="text-align: center;" colspan="5">
-                <a href="Booking.html" class="btn">Book Now</a></th>
+                    <a href="{% url 'menu' %}" class="btn">View Menu</a>
+                    <a href="{% url 'booking' %}" class="btn">Book Now</a>
+                </th>
             </tr>
         </table>
     </div>
-    <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+
+    <br><br><br><br><br><br><br><br><br><br><br><br>
     <div class="footer">
         <div class="row">
             <div class="logos">
-                <h3>Contact Us Here</h3> <p></p>
+                <h3 id="contact">Contact Us Here</h3> <p></p>
                 <a href="https://www.instagram.com/">
                     <img src="{% static 'images/instagram.png' %}" width="75" height="75">
                 </a>

@@ -8,78 +8,241 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" integrity="sha384-gfdkjb5BdAXd+lj+gudLWI+BXq4IuLW5IT+brZEZsLFm++aCMlF1V92rMkPaX4PP" crossorigin="anonymous">
-    <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
 
 	<style>
+
         body {
-        font-family: latha;
-        color: white;
-        background-image: linear-gradient( rgba(0,0,0,0.65), rgba(0,0,0,0.35), rgba(0,0,0,0.15), rgba(0,0,0,0)), url('{% static 'images/restaurantBG1.png' %}');
-        height: 100%;
-        background-repeat: no-repeat;
-        background-size: cover;
+            font-family: latha;
+            color: white;
+            background-image: linear-gradient(rgba(1,1,1,0.8), rgba(0,0,0,0.8), rgba(0,0,0,.8), rgba(1,1,1,.8)), url('{% static 'images/restaurantBG1.png' %}');
+            height: 100%;
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+        .footer {
+            background: #000;
+            color: #8a8a8a;
+            font-size: 14px;
+            margin-left: auto;
+            margin-right: auto;
+            border-top-color: white;
+            border-top-style: solid;
+            border-top-width: 5px;
+            border-top-color: white;
+        }
+
+        .logos {
+            padding: 10px;
+            text-align: center;
+            margin-bottom: 10px;
+            align-items: center;
+        }
+
+        .row {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+        }
+
+        .btn {
+            display: inline-block;
+            background: #ff523b;
+            display: inline-block;
+            color: #fff;
+            padding: 8px 30px;
+            margin: 30px 0;
+            border-radius: 30px;
+            transition: background 0.5s;
+        }
+
+        .btn:hover {
+            background: #4CAF50;
+            color: #fff;
+            padding: 8px 30px;
+            margin: 30px 0;
+            border-radius: 30px;
+            transition: background 0.5s;
+        }
+
+        .btn:hover {
+            background: #563434;
+        }
+        .registerbox {
+            text-align: center;
+            padding: 20px;
+        }
+
+        .user_card {
+            width: 350px;
+            margin-top: auto;
+            margin-bottom: auto;
+            background: #74cfbf;
+            position: relative;
+            display: flex;
+            justify-content: center;
+            flex-direction: column;
+            padding: 10px;
+            box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+            -webkit-box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+            -moz-box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+            border-color: black;
+            border-style: solid;
+            border-width: 5px;
+            border-radius: 10px;
+        }
+
+        .form_container {
+            margin-top: 20px;
+        }
+
+        #form-title {
+            color: #fff;
+        }
+
+        .login_btn {
+            width: 100%;
+            background: #33ccff !important;
+            color: white !important;
+        }
+
+            .login_btn:focus {
+                box-shadow: none !important;
+                outline: 0px !important;
+            }
+
+        .login_container {
+            padding: 0 2rem;
+        }
+
+        .input-group-text {
+            background: #f7ba5b !important;
+            color: white !important;
+            border: 0 !important;
+            border-radius: 0.25rem 0 0 0.25rem !important;
+        }
+
+        .input_user,
+        .input_pass:focus {
+            box-shadow: none !important;
+            outline: 0px !important;
+        }
+        .box {
+            overflow: hidden;
+            background-color: #333;
+        }
+
+            .box a {
+                float: right;
+                color: #f2f2f2;
+                text-align: center;
+                padding: 14px 16px;
+                text-decoration: none;
+                font-size: 18px;
+                display: inline-block;
+            }
+
+                .box a:hover {
+                    background-color: #4CAF50;
+                    color: black;
+                }
+
+                .box a.active {
+                    background-color: #4CAF50;
+                    color: white;
+                }
+
+
+        .midtext {
+            text-align: center;
+            top: 100px;
+            left: 50%;
+            transform: translate(-50%,-50%);
+            background: black;
+            border-style: solid;
+            border-width: 5px;
+            border-radius: 10px;
+            padding: 20px;
         }
     </style>
     
 </head>
 <body>
-	<div class="box">
+    <div class="box">
         <ul type="none">
             <li style="float:left">
                 <a href="{% url 'home' %}">
-                    <img src ="{% static 'images/logo.png' %}" width="60" height="25">
+                    <img src="{% static 'images/logo.png' %}" width="60" height="25">
                 </a>
             </li>
             <li><a href="{% url 'login' %}"> Login </a></li>
-            <li><a href="{% url 'contact' %}"> Contact </a></li>
-			<li><a href="{% url 'menu' %}"> Menu </a></li>
+            <li><a href="#contact"> Contact </a></li>
+            <li><a href="{% url 'booking' %}"> Booking </a></li>
+            <li><a href="{% url 'menu' %}"> Menu </a></li>
             <li><a href="{% url 'home' %}"> Home </a></li>
         </ul>
     </div>
-	<div class="registerbox h-100">
-		<div class="d-flex justify-content-center h-100">
-			<div class="user_card">
-				<div class="d-flex justify-content-center">
+    <br><br><br><br>
+    <div class="registerbox h-100">
+        <div class="d-flex justify-content-center h-100">
+            <div class="user_card">
+                <div class="d-flex justify-content-center">
 
 
-					<h3 id="form-title">LOGIN</h3>
-				</div>
-				<div class="d-flex justify-content-center form_container">
-					<form method="POST" action="">
-						{% csrf_token %}
-						<div class="input-group mb-3">
-							<div class="input-group-append">
-								<span class="input-group-text"><i class="fas fa-user"></i></span>
-							</div>
-							<input type="text" name="username" placeholder="Username..." class="form-control">
-						</div>
-						<div class="input-group mb-2">
-							<div class="input-group-append">
-								<span class="input-group-text"><i class="fas fa-key"></i></span>
-							</div>
-							<input type="password" name="password" placeholder="Password..." class="form-control">
-						</div>
+                    <h3 id="form-title">LOGIN</h3>
+                </div>
+                <div class="d-flex justify-content-center form_container">
+                    <form method="POST" action="">
+                        {% csrf_token %}
+                        <div class="input-group mb-3">
+                            <div class="input-group-append">
+                                <span class="input-group-text"><i class="fas fa-user"></i></span>
+                            </div>
+                            <input type="text" name="username" placeholder="Username..." class="form-control">
+                        </div>
+                        <div class="input-group mb-2">
+                            <div class="input-group-append">
+                                <span class="input-group-text"><i class="fas fa-key"></i></span>
+                            </div>
+                            <input type="password" name="password" placeholder="Password..." class="form-control">
+                        </div>
 
-						<div class="d-flex justify-content-center mt-3 login_container">
-							<input class="btn login_btn" type="submit" value="Login">
-						</div>
-					</form>
+                        <div class="d-flex justify-content-center mt-3 login_container">
+                            <input class="btn" type="submit" value="Login">
+                        </div>
+                    </form>
 
-				</div>
+                </div>
 
-				{% for message in messages %}
-					<p id="messages">{{message}}</p>
-				{% endfor %}
+                {% for message in messages %}
+                <p id="messages">{{message}}</p>
+                {% endfor %}
 
-				<div class="mt-4">
-					<div class="d-flex justify-content-center links">
-						Don't have an account? <a href="{% url 'registration' %}" class="ml-2">Sign Up</a>
-					</div>
+                <div class="mt-4">
+                    <div class="d-flex justify-content-center links">
+                        Don't have an account? <a href="{% url 'registration' %}" class="ml-2">Sign Up</a>
+                    </div>
 
-				</div>
-			</div>
-		</div>
-	</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <br><br><br><br>
+    <div class="footer">
+        <div class="row">
+            <div class="logos">
+                <h3 id="contact">Contact Us Here</h3> <p></p>
+                <a href="https://www.instagram.com/">
+                    <img src="{% static 'images/instagram.png' %}" width="75" height="75">
+                </a>
+                <a href="https://www.facebook.com/">
+                    <img src="{% static 'images/facebook.png' %}" width="75" height="75">
+                </a>
+                <a href="https://www.yelp.com/">
+                    <img src="{% static 'images/yelp.png' %}" width="75" height="75">
+                </a>
+            </div>
+        </div>
+    </div>
 </body>
 
 </html>
