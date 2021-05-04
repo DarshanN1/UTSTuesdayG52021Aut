@@ -8,7 +8,9 @@ from django.core.validators import MaxValueValidator, MinValueValidator
 class Customer(models.Model):
 	user = models.OneToOneField(User, on_delete=models.CASCADE, null=True, blank=True)
 	name = models.CharField(max_length=200,null=True)
+	phone = models.CharField(max_length=10,null=True)
 	email = models.CharField(max_length=200,null=True)
+	date_created = models.DateTimeField(auto_now_add=True,null=True)
 
 	def __str__(self):
 		return self.name
@@ -25,8 +27,17 @@ class Restaurant(models.Model):
 		return self.city
 
 class MenuItem(models.Model):
+	CATEGORY = (
+		('Entree','Entree'),
+		('Salads','Salads'),
+		('Main Course','Main Course'),
+		('Dessert','Dessert'),
+		('Drinks','Drinks'),
+	)
+
 	name = models.CharField(max_length=200,null=True)
 	price = models.FloatField()
+	category = models.CharField(max_length=200,null=True,choices=CATEGORY)
 	portion_size = models.CharField(max_length=10,null=True)
 	desc = models.CharField(max_length=750,null=True)
 	image = models.ImageField(null=True, blank=True)
@@ -72,4 +83,29 @@ class Table(models.Model):
 		return str(self.id)
 
 #class MenuCategory(models.Model):
-#class Order(models.Model): (type: preOrder || pickup) ?
+
+class Category(models.Model):
+	name = models.CharField(max_length=200,null=True)
+
+	def __str__(self):
+		return self.name
+
+
+class Order(models.Model):
+	STATUS = (
+		('Pending','Pending'),
+		('Out for delivery','Out for delivery'),
+		('Delivered','Delivered'),
+		('Served','Served'),
+	)
+	customer = models.ForeignKey(Customer,null=True,on_delete=models.CASCADE)
+	menu_item = models.ManyToManyField(MenuItem)
+	date_created = models.DateTimeField(auto_now_add=True)
+	status = models.CharField(max_length=200,null=True,choices=STATUS)
+
+	def __str__(self):
+		return str(self.id)
+
+"""class OrderItem(models.Model):
+	order = models.ForeignKey(Order,null=False,on_delete=models.CASCADE)
+	item = models.ForeignKey(MenuItem,null=False,on_delete=models.CASCADE)"""
