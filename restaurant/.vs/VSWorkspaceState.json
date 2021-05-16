@@ -1,0 +1,13 @@
+{
+  "ExpandedNodes": [
+    "",
+    "\\restaurant",
+    "\\restaurantApp",
+    "\\restaurantApp\\templates",
+    "\\restaurantApp\\templates\\restaurantApp",
+    "\\static",
+    "\\static\\css"
+  ],
+  "SelectedNode": "\\restaurantApp\\templates\\restaurantApp\\login.html",
+  "PreviewInSolutionExplorer": false
+}
