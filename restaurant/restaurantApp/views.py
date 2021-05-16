@@ -21,13 +21,13 @@ def dashboard_admin(request):
 
 def mainpg(request):
 	context = {}
-	return render(request,'restaurantApp/mainpg.html',context)
+	return render(request,'restaurantApp/main.html',context)
 
 @login_required(login_url='login')
 @allowed_user(allowed_roles=['customer'])
 def mainpgLog(request):
 	context = {}
-	return render(request,'restaurantApp/mainpgLog.html',context)
+	return render(request,'restaurantApp/logMain.html',context)
 
 @unauthenticated_user
 def loginPage(request):
@@ -70,6 +70,8 @@ def registration(request):
 	context = {'form': form}
 	return render(request,'restaurantApp/registration.html',context)
 
+@login_required(login_url='login')
+@allowed_user(allowed_roles=['customer'])
 def booking(request):
 	context = {}
 	return render(request,'restaurantApp/booking.html',context)
