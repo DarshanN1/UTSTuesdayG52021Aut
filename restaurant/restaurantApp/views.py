@@ -106,6 +106,7 @@ def registration(request):
 	context = {'form': form}
 	return render(request,'restaurantApp/registration.html',context)
 
+@login_required(login_url='login')
 def booking(request):
 	context = {}
 	return render(request,'restaurantApp/booking.html',context)
@@ -130,7 +131,7 @@ def cart(request):
 	if request.user.is_authenticated:
 		customer = request.user.customer
 		order, created = Order.objects.get_or_create(customer=customer,status='Pending')
-		items = order.menu_item.all()
+		items = order.menuitem_set.all()
 	else:
 		items = []
 	#remove loop

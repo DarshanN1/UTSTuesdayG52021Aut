@@ -7,7 +7,7 @@ for(var i=0; i<updateBtns.length; i++){
 		console.log('itemId:',itemId,'action:',action)
 
 		console.log('USER:',user)
-		if(user=='AnonymousUser'){
+		if(user==='AnonymousUser'){
 			console.log('Not logged in')
 		}
 		else{
@@ -36,5 +36,6 @@ function updateUserOrder(itemId,action){
 
 	.then((data) => {
 		console.log('data:',data)
+		location.reload()
 	})
 }

@@ -7,9 +7,8 @@
     "\\restaurantApp\\templates\\restaurantApp",
     "\\static",
     "\\static\\css",
-    "\\static\\images",
     "\\static\\js"
   ],
-  "SelectedNode": "\\static\\css\\main.css",
+  "SelectedNode": "\\restaurantApp\\templates\\restaurantApp\\login.html",
   "PreviewInSolutionExplorer": false
 }

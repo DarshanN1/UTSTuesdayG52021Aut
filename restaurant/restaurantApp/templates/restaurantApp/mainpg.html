@@ -136,7 +136,19 @@
                     <img src ="{% static 'images/logo.png' %}" width="60" height="25">
                 </a>
             </li>
-            <li><a href="{% url 'login' %}"> Login </a></li>
+            {% if request.user.is_staff %}
+            <li><a href="{% url 'logout' %}"> Logout </a></li>
+            <li><a href="{% url 'dashboard-admin' %}"> Staff </a></li>
+
+            {% else %}
+                {% if user.is_authenticated %}
+                <li><a href="{% url 'logout' %}"> Logout </a></li>
+                <li><a href="{% url 'account' %}"> MyAccount </a></li>
+            
+                {% else %}
+                <li><a href="{% url 'login' %}"> Login </a></li>
+                {% endif %}
+            {%endif%}
             <li><a href="{% url 'contact' %}"> Contact </a></li>
             <li><a href="{% url 'booking' %}"> Booking </a></li>
             <li><a href="{% url 'menu' %}"> Menu </a></li>

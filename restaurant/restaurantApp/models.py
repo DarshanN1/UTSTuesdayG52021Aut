@@ -37,24 +37,14 @@ class MenuItem(models.Model):
 
 	name = models.CharField(max_length=200,null=True)
 	price = models.FloatField()
-	category = models.CharField(max_length=200,null=True,choices=CATEGORY)
 	portion_size = models.CharField(max_length=10,null=True)
 	desc = models.CharField(max_length=750,null=True)
 	image = models.ImageField(null=True, blank=True)
-	#menu_category (FK) 
-	#ingredients
+	#category = models.ForeignKey(Category,null=True,blank=True,on_delete=models.CASCADE)
 
 	def __str__(self):
 		return self.name
-""""
-	@property
-	def imageURL(self):
-		try:
-			self.image.url
-		except:
-			url = ''
-		return url
-"""
+
 
 class Booking(models.Model):
 	"""Assuming a customer can make a single booking at a given time"""
@@ -82,14 +72,17 @@ class Table(models.Model):
 	def __str__(self):
 		return str(self.id)
 
-#class MenuCategory(models.Model):
 
 class Category(models.Model):
 	name = models.CharField(max_length=200,null=True)
+	category_item = models.ForeignKey(MenuItem,null=True,blank=True,on_delete=models.CASCADE)
 
 	def __str__(self):
 		return self.name
 
+
+#create a complete order based on what is already in the cart? i.e. separate class
+#or cart itself
 
 class Order(models.Model):
 	STATUS = (
@@ -99,13 +92,21 @@ class Order(models.Model):
 		('Served','Served'),
 	)
 	customer = models.ForeignKey(Customer,null=True,on_delete=models.CASCADE)
-	menu_item = models.ManyToManyField(MenuItem)
+	menuitem = models.ForeignKey(MenuItem,null=True,on_delete=models.CASCADE)
 	date_created = models.DateTimeField(auto_now_add=True)
 	status = models.CharField(max_length=200,null=True,choices=STATUS)
+	transaction_id = models.CharField(max_length=100,null=True)
 
 	def __str__(self):
 		return str(self.id)
 
-"""class OrderItem(models.Model):
-	order = models.ForeignKey(Order,null=False,on_delete=models.CASCADE)
-	item = models.ForeignKey(MenuItem,null=False,on_delete=models.CASCADE)"""
+class OrderItem(models.Model):
+	order = models.ForeignKey(Order,null=True,on_delete=models.CASCADE)
+	item = models.ForeignKey(MenuItem,null=True,on_delete=models.CASCADE)
+	quantity = models.IntegerField(default=0,null=True,blank=True)
+	date_added = models.DateTimeField(auto_now_add=True)
+
+	@property
+	def get_total(self):
+		total = self.item.price * self.quantity
+		return total
