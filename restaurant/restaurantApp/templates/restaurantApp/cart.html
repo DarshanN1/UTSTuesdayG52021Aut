@@ -1,0 +1,78 @@
+{% extends 'restaurantApp/menu.html' %}
+{% load static %}
+{% block content %}
+
+	<style>
+		.box-element{
+			width:70%;
+			transform:translate(50,0);
+		}
+		tr{
+			text-align:center;
+		}
+	</style>
+
+	<div class="row">
+		<div class="col-lg-12">
+			<div class="box-element">
+
+				<a class="btn btn-outline-dark" style="right:30%" href="{% url 'menu' %}">&#x2190; Back to Menu</a>
+				<br>
+				<p></p>
+				<p style="font-color:red">Your booking will be held for another 8 minutes until you proceed to checkout.</p>
+				<br>
+				<table class="table">
+					<tr>
+						<th><h5>Items: <strong>{{order.get_cart_items}}</strong></h5></th>
+						<th><h5>Total: <strong>${{order.get_cart_total|floatformat:2}}</strong></h5></th>
+						<th>
+							<a  style="float:right; margin:5px;" class="btn btn-success" href="{% url 'checkout' %}">Proceed to Checkout</a>
+							<a  style="float:right; margin:5px;  background-color: red; border: 1px solid transparent;" class="btn btn-success" href="">Cancel Order</a>
+						</th>
+					</tr>
+				</table>
+
+			</div>
+
+			<br>
+			<div class="box-element">
+				
+				<div class="col-md-13">
+					<h5>Items in Cart:</h5>
+					<hr>
+					<div class="card card-body">
+						<table class="table table-sm">
+							<tr>
+								<th></th>
+								<th>Item</th>
+								<th>Price</th>
+								<th>Quantity</th>
+								<th></th>
+								<th>Sub-total</th>
+							</tr>
+
+							{% for item in items %}
+							<tr>
+								<td><img class="row-image" src="{{item.menu_item.image.url}}"></td>
+								<td>{{item.menu_item.name}}</td>
+								<td>{{item.menu_item.price|floatformat:2}}</td>
+								<td>{{item.quantity}}</td>
+								<td>
+									<div class="quantity">
+										<img data-menu_item={{item.menu_item.id}} data-action="add" class="chg-quantity update-cart" src="{% static  'images/arrow-up.png' %}">
+					
+										<img data-menu_item={{item.menu_item.id}} data-action="remove" class="chg-quantity update-cart" src="{% static  'images/arrow-down.png' %}">
+									</div>
+								</td>
+								<td>${{item.get_total}}</td>
+							</tr>
+							{% endfor %}
+						</table>
+					</div>
+				</div>
+			
+			</div>
+		</div>
+	</div>
+
+{% endblock %}

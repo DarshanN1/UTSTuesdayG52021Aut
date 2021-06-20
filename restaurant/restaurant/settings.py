@@ -39,7 +39,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'datetimepicker',
     'crispy_forms',
-    'restaurantApp'
+    'restaurantApp',
+    'django_filters',
 ]
 
 MIDDLEWARE = [

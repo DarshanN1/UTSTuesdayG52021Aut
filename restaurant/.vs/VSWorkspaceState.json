@@ -4,10 +4,8 @@
     "\\restaurant",
     "\\restaurantApp",
     "\\restaurantApp\\templates",
-    "\\restaurantApp\\templates\\restaurantApp",
-    "\\static",
-    "\\static\\css"
+    "\\restaurantApp\\templates\\restaurantApp"
   ],
-  "SelectedNode": "\\restaurantApp\\views.py",
+  "SelectedNode": "\\restaurantApp\\templates\\restaurantApp\\menu.html",
   "PreviewInSolutionExplorer": false
 }

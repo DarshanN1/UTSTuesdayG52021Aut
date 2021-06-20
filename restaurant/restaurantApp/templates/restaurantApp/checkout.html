@@ -1,0 +1,77 @@
+{% extends 'restaurantApp/menu.html' %}
+{% load static %}
+{% block content %}
+	<style>
+		.box-element{
+			width:70%;
+			transform:translate(50,0);
+		}
+		tr,td{
+			text-align:center;
+		}
+	</style>
+
+     <div class="row">
+		<div class="col-lg-13"  style="width:90.5%">
+			<div class="box-element" id="form-wrapper">
+				<hr>
+				<h3>Confirm Booking Information:</h3>
+				<hr>
+				<table class="table table-sm">
+				<tr>
+					<th>Date and time of booking</th>
+					<th>Number of guests</th>
+					<th>Booking ref number</th>
+				</tr>
+
+				<tr>
+					<td>21 June 2021 at 11:30am</td>
+					<td>2</td>
+					<td>#6ASD3279JK12</td>
+				</tr>
+			</table>
+			<p>Email adddress: {{user.customer.email}}</p>
+			<a  class="btn btn-outline-dark" href="{% url 'booking' %}">Edit Booking</a>
+			</div>
+
+			<br>
+			<div class="box-element hidden" id="payment-info">
+				<small>Paypal Options</small>
+			</div>
+			
+		</div>
+	</div>
+
+	<div class="row">
+		<div class="col-lg-13" style="width:90.5%">
+			<div class="box-element">
+				<a  class="btn btn-outline-dark" href="{% url 'cart' %}">&#x2190; Back to Cart</a>
+				<hr>
+				<h3>Order Summary</h3>
+
+				<table class="table table-sm">
+					<tr>
+						<th></th>
+						<th></th>
+						<th></th>
+					</tr>
+
+					{% for item in items %}
+					<tr>
+						<td>
+							<img class="row-image" src="{{item.menu_item.image.url}}"></td>
+							<td><p>{{item.menu_item.name}}</p>
+							<p>${{item.menu_item.price|floatformat:2}} x{{item.quantity}}</p>
+						</td>
+						<td>${{item.get_total|floatformat:2}}</td>
+					</tr>
+					{% endfor %}
+				</table>
+				<a  style="float:right; margin:5px;" class="btn btn-success" href="{% url 'checkout' %}">Payment Options</a>
+				<h5>Items:   {{order.get_cart_items}}</h5>
+				<h5>Total:   ${{order.get_cart_total|floatformat:2}}</h5>
+			</div>
+		</div>
+		
+	</div>
+{% endblock content %}
