@@ -5,8 +5,9 @@
     "\\restaurantApp",
     "\\restaurantApp\\templates",
     "\\restaurantApp\\templates\\restaurantApp",
-    "\\static\\css"
+    "\\static",
+    "\\static\\js"
   ],
-  "SelectedNode": "\\restaurantApp\\forms.py",
+  "SelectedNode": "\\restaurantApp\\templates\\restaurantApp\\mainpg.html",
   "PreviewInSolutionExplorer": false
 }

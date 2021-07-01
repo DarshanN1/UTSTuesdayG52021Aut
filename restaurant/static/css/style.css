@@ -25,7 +25,6 @@
 
 .midtext {
 	text-align: center;
-	position: fixed;
 	top: 50%;
 	left: 50%;
 	transform: translate(-50%,-50%);
@@ -39,7 +38,7 @@
 body {
     font-family: latha;
     color: white;
-    background-image: linear-gradient( rgba(0,0,0,0.65), rgba(0,0,0,0.35), rgba(0,0,0,0.15), rgba(0,0,0,0)), url("{% static 'images/restaurantBG1.png' %}");
+    background: linear-gradient( rgba(0,0,0,0.65), rgba(0,0,0,0.35), rgba(0,0,0,0.15), rgba(0,0,0,0)), url("{% static 'images/restaurantBG1.png' %}");
     height: 100%;
     background-repeat: no-repeat;
     background-size: cover;
@@ -141,7 +140,7 @@ body {
 
 .navbar {
   float: right;
-  color: #f2f2f2;
+  color: #000000;
   text-align: center;
   padding: 14px 16px;
   text-decoration: none;

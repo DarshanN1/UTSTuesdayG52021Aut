@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+{% load static %}
+<html>
+<head>
+	<title>Andre's Bistro</title>
+
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1" />
+
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+
+	<link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}">
+
+	<style>
+		body{
+			background-image: linear-gradient(rgba(1,1,1,0.5), rgba(0,0,0,0), rgba(0,0,0,0), rgba(1,1,1,0.5)), url('{% static 'images/restaurantBG1.png' %}');
+			height: 100%;
+			background-repeat: no-repeat;
+			background-attachment: fixed;
+		}
+		.dot {
+			height: 25px;
+			width: 25px;
+			text-align:center;
+			background-color: #C70039;
+			border-radius: 50%;
+			display: inline-block;
+		}
+		.box-element{
+			width:70%;
+			transform:translate(50,0);
+			margin: auto;
+			width: 60%;
+			padding: 10px;
+		}
+		tr{
+			text-align:center;
+		}
+		.header {
+            background: #000;
+            color: #8a8a8a;
+            font-size: 14px;
+            margin-left: auto;
+            margin-right: auto;
+            padding-top: 10px;
+            padding-bottom: 5px;
+            border-color: white;
+            border-style: solid;
+            border-top-width: 5px;
+            border-bottom-width: 5px;
+            border-left: 0px;
+            border-right: 0px;
+            font-family: 'Josefin Sans';
+        }
+
+		.row {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+        }
+	</style>
+
+	<script type="text/javascript">
+		var user = '{{request.user}}'
+		function getToken(name) {
+			var cookieValue = null;
+			if (document.cookie && document.cookie !== '') {
+				var cookies = document.cookie.split(';');
+				for (var i = 0; i < cookies.length; i++) {
+					var cookie = cookies[i].trim();
+					if (cookie.substring(0, name.length + 1) === (name + '=')) {
+						cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+						break;
+					}
+				}
+			}
+			return cookieValue;
+		}
+		var csrftoken = getToken('csrftoken');
+	</script>
+
+</head>
+<body>
+	<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+	  <!--a class="navbar-brand" href="{% url 'menu' %}">Menu</a-->
+		<a href="{% url 'home' %}">
+            <img src ="{% static 'images/logo.png' %}" width="60" height="25">
+        </a>
+		<li class="nav-item">
+	        <a class="nav-link disabled" href=""></a>
+	    </li>
+	  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+	    <span class="navbar-toggler-icon"></span>
+	  </button>
+
+	  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+	    <ul class="navbar-nav mr-auto">
+	      <li class="nav-item active">
+	        <a class="nav-link" href="{% url 'menu' %}">Menu <span class="sr-only">(current)</span></a>
+	      </li>
+	      <li class="nav-item dropdown">
+	        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+	          Lunch
+	        </a>
+	        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+	          <a class="dropdown-item" href="#">Dinner</a>
+	          <a class="dropdown-item" href="#">Desserts</a>
+	          <div class="dropdown-divider"></div>
+	          <a class="dropdown-item" href="#">Specials</a>
+	        </div>
+	      </li>
+	      <!--li class="nav-item">
+	        <a class="nav-link disabled" href="#">Order</a>
+	      </li-->
+		  <li class="nav-item">
+	        <a class="nav-link" href="{% url 'booking' %}">Booking</a>
+	      </li>
+		  <li class="nav-item">
+	        <a class="nav-link" href="{% url 'cart' %}">Order <span class="dot">{{order.get_cart_items}}</span></a>
+			
+	      </li>
+	    </ul>
+
+	  </div>
+	</nav>
+	<div class="header">
+        <div class="row">
+            <h3 style="color:white">Step 3: View Cart</h3>
+        </div>
+    </div>
+	<br><br><br>
+	<div class="row">
+		<div class="col-lg-12">
+			<div class="box-element">
+
+				<a class="btn btn-outline-dark" style="right:30%" href="{% url 'menu' %}">&#x2190; Back to Menu</a>
+				<br>
+				<p></p>
+				<p>Your booking will be held for another 8 minutes until you proceed to checkout.</p>
+				<br>
+				<table class="table">
+					<tr>
+						<th><h5>Items: <strong>{{order.get_cart_items}}</strong></h5></th>
+						<th><h5>Total: <strong>${{order.get_cart_total|floatformat:2}}</strong></h5></th>
+						<th>
+							<a  style="float:right; margin:5px;" class="btn btn-success" href="{% url 'checkout' %}">Proceed to Checkout</a>
+							<a  style="float:right; margin:5px;  background-color: red; border: 1px solid transparent;" class="btn btn-success" href="">Cancel Order</a>
+						</th>
+					</tr>
+				</table>
+
+			</div>
+
+			<br>
+			<div class="box-element">
+				
+				<div class="col-md-13">
+					<h5>Items in Cart:</h5>
+					<hr>
+					<div class="card card-body">
+						<table class="table table-sm">
+							<tr>
+								<th></th>
+								<th>Item</th>
+								<th>Price</th>
+								<th>Quantity</th>
+								<th></th>
+								<th>Sub-total</th>
+							</tr>
+
+							{% for item in items %}
+							<tr>
+								<td><img class="row-image" src="{{item.menu_item.image.url}}"></td>
+								<td>{{item.menu_item.name}}</td>
+								<td>{{item.menu_item.price|floatformat:2}}</td>
+								<td>{{item.quantity}}</td>
+								<td>
+									<div class="quantity">
+										<img data-menu_item={{item.menu_item.id}} data-action="add" class="chg-quantity update-cart" src="{% static  'images/arrow-up.png' %}">
+					
+										<img data-menu_item={{item.menu_item.id}} data-action="remove" class="chg-quantity update-cart" src="{% static  'images/arrow-down.png' %}">
+									</div>
+								</td>
+								<td>${{item.get_total}}</td>
+							</tr>
+							{% endfor %}
+						</table>
+					</div>
+				</div>
+			
+			</div>
+		</div>
+	</div>
+
+	<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+
+	<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+
+	<script type="text/javascript" src="{% static 'js/cart.js' %}"></script>
+
+</body>
+</html>
