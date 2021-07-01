@@ -1,17 +1,255 @@
-{% extends 'restaurantApp/menu.html' %}
+<!DOCTYPE html>
 {% load static %}
-{% block content %}
+<html>
+<head>
+	<title>Andre's Bistro</title>
+
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1" />
+
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+
+	<link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}">
+
 	<style>
+		body{
+			background-image: linear-gradient(rgba(1,1,1,0.5), rgba(0,0,0,0), rgba(0,0,0,0), rgba(1,1,1,0.5)), url('{% static 'images/restaurantBG1.png' %}');
+			height: 100%;
+			background-repeat: no-repeat;
+			background-attachment: fixed;
+		}
+		.dot {
+			height: 25px;
+			width: 25px;
+			text-align:center;
+			background-color: #C70039;
+			border-radius: 50%;
+			display: inline-block;
+		}
 		.box-element{
 			width:70%;
 			transform:translate(50,0);
+			margin: auto;
+			width: 60%;
+			padding: 10px;
 		}
 		tr,td{
 			text-align:center;
 		}
+
+		/* Button used to open the contact form - fixed at the bottom of the page */
+		.make-payment {
+		  background-color: #242424;
+		  padding:15px;
+		  color: white;
+		  padding: 10px 12px;
+		  border: none;
+		  cursor: pointer;
+		  opacity: 0.8;
+		}
+
+		/* The popup form - hidden by default */
+		.form-popup {
+		  display: none;
+		  position: fixed;
+		  bottom: 0;
+		  right: 15px;
+		  border: 3px solid #f1f1f1;
+		  z-index: 9;
+		}
+
+		/* Add styles to the form container */
+		.form-container {
+		  max-width: 300px;
+		  padding: 10px;
+		  background-color: white;
+		}
+
+		/* Full-width input fields */
+		.form-container input[type=text], .form-container input[type=password] {
+		  width: 100%;
+		  padding: 15px;
+		  margin: 5px 0 22px 0;
+		  border: none;
+		  background: #f1f1f1;
+		}
+
+		/* When the inputs get focus, do something */
+		.form-container input[type=text]:focus, .form-container input[type=password]:focus {
+		  background-color: #ddd;
+		  outline: none;
+		}
+
+		/* Set a style for the submit/login button */
+		.form-container .btn {
+		  background-color: #04AA6D;
+		  color: white;
+		  padding: 16px 20px;
+		  border: none;
+		  cursor: pointer;
+		  width: 100%;
+		  margin-bottom:10px;
+		  opacity: 0.8;
+		}
+
+		/* Add a red background color to the cancel button */
+		.form-container .cancel {
+		  background-color: red;
+		}
+
+		/* Add some hover effects to buttons */
+		.form-container .btn:hover, .open-button:hover {
+		  opacity: 1;
+		}
+
+
+		.triggerbox {
+		  width: 40%;
+		  margin: 0 auto;
+		  background-color: rgba(255,255,255,0.2);
+		  padding: 35px;
+		  background-clip: padding-box;
+		  text-align: center;
+		}
+
+		.button {
+		  font-size: 1em;
+		  padding: 10px;
+		  color: #fff;
+		  border: 2px solid #06D85F;
+		  border-radius: 20px/50px;
+		  text-decoration: none;
+		  cursor: pointer;
+		  transition: all 0.3s ease-out;
+		}
+		.button:hover {
+		  background: #06D85F;
+		}
+
+		.overlay {
+		  position: fixed;
+		  top: 0;
+		  bottom: 0;
+		  left: 0;
+		  right: 0;
+		  background: rgba(0, 0, 0, 0.7);
+		  transition: opacity 500ms;
+		  visibility: hidden;
+		  opacity: 0;
+		}
+		.overlay:target {
+		  visibility: visible;
+		  opacity: 1;
+		}
+
+		.popup {
+		  margin: 70px auto;
+		  padding: 20px;
+		  background: #fff;
+		  border-radius: 5px;
+		  width: 30%;
+		  position: relative;
+		  transition: all 5s ease-in-out;
+		}
+
+		.popup h2 {
+		  margin-top: 0;
+		  color: #333;
+		  font-family: Tahoma, Arial, sans-serif;
+		}
+		.popup .close {
+		  position: absolute;
+		  top: 20px;
+		  right: 30px;
+		  transition: all 200ms;
+		  font-size: 30px;
+		  font-weight: bold;
+		  text-decoration: none;
+		  color: #333;
+		}
+		.popup .close:hover {
+		  color: #474747;
+		}
+		.popup .content {
+		  max-height: 30%;
+		  overflow: auto;
+		}
+
+		@media screen and (max-width: 700px){
+		  .box{
+			width: 70%;
+		  }
+		  .popup{
+			width: 70%;
+		  }
+		}
+
 	</style>
 
-     <div class="row">
+	<script type="text/javascript">
+		var user = '{{request.user}}'
+		function getToken(name) {
+			var cookieValue = null;
+			if (document.cookie && document.cookie !== '') {
+				var cookies = document.cookie.split(';');
+				for (var i = 0; i < cookies.length; i++) {
+					var cookie = cookies[i].trim();
+					if (cookie.substring(0, name.length + 1) === (name + '=')) {
+						cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+						break;
+					}
+				}
+			}
+			return cookieValue;
+		}
+		var csrftoken = getToken('csrftoken');
+	</script>
+
+</head>
+
+<body>
+	<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+		<!--a class="navbar-brand" href="{% url 'menu' %}">Menu</a-->
+		<a href="{% url 'home' %}">
+			<img src ="{% static 'images/logo.png' %}" width="60" height="25">
+		</a>
+		<li class="nav-item">
+			<a class="nav-link disabled" href=""></a>
+		</li>
+		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+		<span class="navbar-toggler-icon"></span>
+		</button>
+
+		<div class="collapse navbar-collapse" id="navbarSupportedContent">
+		<ul class="navbar-nav mr-auto">
+			<li class="nav-item active">
+			<a class="nav-link" href="{% url 'menu' %}">Menu <span class="sr-only">(current)</span></a>
+			</li>
+			<li class="nav-item dropdown">
+			<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+				Lunch
+			</a>
+			<div class="dropdown-menu" aria-labelledby="navbarDropdown">
+				<a class="dropdown-item" href="#">Dinner</a>
+				<a class="dropdown-item" href="#">Desserts</a>
+				<div class="dropdown-divider"></div>
+				<a class="dropdown-item" href="#">Specials</a>
+			</div>
+			</li>
+			<li class="nav-item">
+			<a class="nav-link" href="{% url 'booking' %}">Booking</a>
+			</li>
+			<li class="nav-item">
+			<a class="nav-link" href="{% url 'contact' %}">Contacts</a>
+			</li>
+			<li class="nav-item">
+			<a class="nav-link" href="{% url 'cart' %}">Order <span class="dot">{{order.get_cart_items}}</span></a>
+			
+			</li>
+		</ul>
+		</div>
+	</nav>
+
+    <div class="row" style="padding:10px">
 		<div class="col-lg-13"  style="width:90.5%">
 			<div class="box-element" id="form-wrapper">
 				<hr>
@@ -43,8 +281,8 @@
 	</div>
 
 	<div class="row">
-		<div class="col-lg-13" style="width:90.5%">
-			<div class="box-element">
+		<div class="col-lg-13" style="width:90.5%;">
+			<div class="box-element" style="padding:10px">
 				<a  class="btn btn-outline-dark" href="{% url 'cart' %}">&#x2190; Back to Cart</a>
 				<hr>
 				<h3>Order Summary</h3>
@@ -67,11 +305,45 @@
 					</tr>
 					{% endfor %}
 				</table>
-				<a  style="float:right; margin:5px;" class="btn btn-success" href="{% url 'checkout' %}">Payment Options</a>
-				<h5>Items:   {{order.get_cart_items}}</h5>
-				<h5>Total:   ${{order.get_cart_total|floatformat:2}}</h5>
+				
+				<h5 style="float:right;">&emsp; Total:   ${{order.get_cart_total|floatformat:2}}</h5>
+				<h5 style="float:left;"> &emsp; Items:   {{order.get_cart_items}} &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;</h5>
+				<a class="make-payment" href="#popup1">Complete Checkout</a>
+				<!--button class="open-button" onclick="openForm()">Payment Options</button-->
+				<!--h5 style="float:left;"> &emsp; Items:   {{order.get_cart_items}} &emsp; Total:   ${{order.get_cart_total|floatformat:2}} &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;</h5-->
+				<!--a style="float:center" class="btn btn-success" href="{% url 'checkout' %}">Payment Options</a-->
+				<hr>
+				
 			</div>
 		</div>
-		
 	</div>
-{% endblock content %}
+
+	<div class="overlay" id="popup1">
+		<div class="popup">
+			<h2 style="text-align:center">Pay using...</h2><br>
+			<a class="close" href="#">&times;</a>
+			<button>Credit Card</button>
+			<br><br>
+			<button>PayPal</button>
+		</div>
+	</div>
+
+	<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+
+	<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+
+	<script type="text/javascript" src="{% static 'js/cart.js' %}"></script>
+
+	<script>
+		document.getElementById('make-payment').addEventListener('click',function(e){
+			submitPaymentData()
+		})
+	
+		function submitPaymentData(){
+			console.log('Payment button clicked.')
+		}
+	</script>
+</body>
+</html>

@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 from django.core.validators import MaxValueValidator, MinValueValidator
+import uuid
 
 # Create your models here.
 # null True and blank True are almost the same, except in the case
@@ -14,6 +15,11 @@ class Customer(models.Model):
 
 	def __str__(self):
 		return self.name
+
+	@classmethod
+	def create(cls,user,name,email):
+		customer = cls(user=user,name=name,phone='',email=email)
+		return customer
 
 class Restaurant(models.Model):
 	address = models.CharField(max_length=200,null=False)
@@ -49,24 +55,18 @@ class MenuItem(models.Model):
 class Booking(models.Model):
 	"""Assuming a customer can make a single booking at a given time"""
 	customer = models.ForeignKey(Customer,on_delete=models.SET_NULL,null=True, blank=True)
-	restaurant = models.ForeignKey(Restaurant,on_delete=models.SET_NULL,null=True,blank=True)
 	dt_booking_created = models.DateTimeField(auto_now_add=True)
 	complete = models.BooleanField(default=False,null=True,blank=False)
 	number_of_guests = models.IntegerField()
-	special_req = models.CharField(max_length=200,null=True,blank=True)
-	transaction_id = models.CharField(max_length=200,null=True)
+	#special_req = models.CharField(max_length=200,null=True,blank=True)
+	transaction_id = models.UUIDField(default=uuid.uuid4, unique=True, db_index=True, editable=False)
 
 	def __str__(self):
-		return str(self.id)
+		return self.customer.name
 
 class Table(models.Model):
 	restaurant = models.ForeignKey(Restaurant,on_delete=models.CASCADE)
 	capacity = models.IntegerField(validators=[MaxValueValidator(10),MinValueValidator(2)])
-	#booked at a certain date & time
-	#booked = models.BooleanField(default=False,null=True,blank=False)
-	
-	#table currently selected by a user; lock it for a time period
-	#selected = models.BooleanField()
 
 	def __str__(self):
 		return str(self.id)

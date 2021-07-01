@@ -1,4 +1,5 @@
 from django.shortcuts import render, redirect
+from django.db.models import Q
 from .models import *
 from django.http import JsonResponse
 import json
@@ -25,7 +26,8 @@ def menu(request):
 		order = {'get_cart_items':0, 'get_cart_total':0}
 		cartItems = order['get_cart_items']
 
-	itemFilter = MenuFilter()
+	itemFilter = MenuFilter(request.GET,queryset=menu_items)
+	menu_items = itemFilter.qs
 
 	context = {'menu_items':menu_items,'order':order,'itemFilter':itemFilter}
 	return render(request,'restaurantApp/menu.html',context)
@@ -57,7 +59,7 @@ def updateItem(request):
 		return JsonResponse('Item was added',safe=False)
 
 	except json.decoder.JSONDecodeError:
-		print("There was a problem accessing the equipment data.")
+		print("There was a problem accessing the website data.")
 	return JsonResponse('Oops...',safe=False)
 
 def dashboard_admin(request):
@@ -116,8 +118,11 @@ def registration(request):
 			# form based on User model, saving will create a new User
 			user = form.save()
 			username = form.cleaned_data.get('username')
-			group = Group.objects.get(name='customer')
-			user.groups.add(group)
+			email = form.cleaned_data.get('email')
+			cust_group = Group.objects.get(name='customer')
+			user.groups.add(cust_group)
+			customer = Customer.create(user,username,email)
+			customer.save()
 			messages.success(request,'Account was created for ' + username)
 			return redirect('login')
 	else:
@@ -160,7 +165,7 @@ def checkout(request):
 def cart(request):
 	if request.user.is_authenticated:
 		customer = request.user.customer
-		order, created = Order.objects.get_or_create(customer=customer,complete=False)
+		order, created = Order.objects.get_or_create(customer=customer,status='Pending',complete=False)
 		items = order.orderitem_set.all()
 	else:
 		items = []

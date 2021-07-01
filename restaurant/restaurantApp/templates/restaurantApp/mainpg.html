@@ -124,8 +124,8 @@
     </style>
 
 </head>
-<body>
 
+<body>
     <div class="box">
         <ul type="none">
             <li style="float:left">
@@ -141,10 +141,11 @@
             {% if request.user.is_anonymous %}
             <li><a href="{% url 'login' %}"> Login </a></li>
             {% endif %}
-            <li><a href="#contact"> Contact </a></li>
-            <li><a href="{% url 'booking' %}"> Booking </a></li>
-            <li><a href="{% url 'menu' %}"> Menu </a></li>
-            <li><a href="{% url 'home' %}"> Home </a></li>
+            
+            <li style="float:left"><a href="{% url 'home' %}"> Home </a></li>
+            <li style="float:left"><a href="{% url 'menu' %}"> Menu </a></li>
+            <li style="float:left"><a href="{% url 'booking' %}"> Booking </a></li>
+            <li style="float:left"><a href="#contact"> Contact </a></li>
         </ul>
     </div>
 

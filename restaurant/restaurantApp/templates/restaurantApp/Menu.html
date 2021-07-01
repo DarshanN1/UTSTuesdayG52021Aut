@@ -46,6 +46,7 @@
 		var csrftoken = getToken('csrftoken');
 	</script>
 
+
 </head>
 <body>
 	<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
@@ -90,9 +91,11 @@
 			
 	      </li>
 	    </ul>
-	    <form method="get" class="form-inline my-2 my-lg-0">
-	      <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-	      <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+
+	    <form method='GET' class="form-inline my-2 my-lg-0">
+		  {{itemFilter.form}}
+	      &nbsp;&nbsp;<button class="btn btn-outline-success my-2 my-sm-0" type="submit" value="{{ query|escape }}">Search</button>
+		  <!--input class="form-control mr-sm-2" type="text" name="q" placeholder="Search" aria-label="Search"-->
 	    </form>
 	  </div>
 	</nav>

@@ -4,8 +4,10 @@
     "\\restaurant",
     "\\restaurantApp",
     "\\restaurantApp\\templates",
-    "\\restaurantApp\\templates\\restaurantApp"
+    "\\restaurantApp\\templates\\restaurantApp",
+    "\\static",
+    "\\static\\js"
   ],
-  "SelectedNode": "\\restaurantApp\\templates\\restaurantApp\\menu.html",
+  "SelectedNode": "\\restaurantApp\\templates\\restaurantApp\\mainpg.html",
   "PreviewInSolutionExplorer": false
 }

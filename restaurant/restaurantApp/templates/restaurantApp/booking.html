@@ -169,12 +169,16 @@
             {% if request.user.is_staff %}
             <li><a href="{% url 'dashboard-admin' %}"> Staff </a></li>
             {% endif %}
-            <li><a href="{% url 'account' %}"> MyAccount </a></li>
+            <li style="float:left"><a href="{% url 'home' %}"> Home </a></li>
+            <li style="float:left"><a href="{% url 'menu' %}"> Menu </a></li>
+            <li style="float:left"><a href="{% url 'booking' %}"> Booking </a></li>
+            <li style="float:left"><a href="#contact"> Contact </a></li>
+            {% if request.user.is_active %}
             <li><a href="{% url 'logout' %}"> Logout </a></li>
-            <li><a href="#contact"> Contact </a></li>
-            <li><a href="{% url 'booking' %}"> Booking </a></li>
-            <li><a href="{% url 'menu' %}"> Menu </a></li>
-            <li><a href="{% url 'home' %}"> Home </a></li>
+            <li><a href="{% url 'account' %}"> Account </a></li>
+            {% else %}
+            <li><a href="{% url 'login' %}">Login</a></li
+            {% endif %}
         </ul>
     </div>
     <div class="header">
@@ -189,10 +193,17 @@
             <h3>Select a Date and Time</h3>
         </div>
         <input type="date" id="start" name="trip-start"
-               value="2021-29-04"
-               min="2021-29-04" max="2022-01-01"> <!--Link with current start date-->
+               value="2021-23-06"
+               min="2021-23-06" max="2022-01-01"> <!--Link with current start date-->
         <input type="time" id="appt" name="appt"
                min="09:00" max="23:00" required>  <!--Link this with the restaurant opening hours-->
+
+        <script>
+            function getCurrentDate() {
+                document.getElementById('start').value = new Date().toDateInputValue();
+                document.getElementById('start').min = new Date().toDateInputValue();
+            }
+        </script>
 
         <br><br>
         <div class="row">
@@ -200,7 +211,7 @@
         </div>
 
         <button class="btn2" onclick="decrement()">-</button>
-        <input id=demoInput type=number min=0 max=10>
+        <input id=demoInput type=number min=1 max=10>
         <button class="btn2" onclick="increment()">+</button>
 
         <script>
@@ -210,7 +221,31 @@
                 document.getElementById('demoInput').stepDown();
             }
         </script>
-        <br>
+
+        <br><br>
+        <div class="row">
+            <h3>Contact Details: </h3>
+        </div>
+
+        <div class="row">
+            <!--To get to booking, user must be logged in, so some info can be prefilled-->
+            {% if user.customer.name != '' %}
+            <p>Name: {{user.customer.name}}</p>
+            {% else %}
+            <p>Enter name: </p>
+            {% endif %}
+        </div>
+        <div class="row">
+            {% if user.customer.phone != '' %}
+            <p>Phone number: {{user.customer.phone}}</p>
+            {% else %}
+            <p>Enter phone number: </p>
+            {% endif %}
+        </div>
+        <div class="row">
+            <p>Email: {{user.customer.email}}</p>
+        </div>
+
         <a href="{% url 'menu' %}" class="btn">Continue with Booking    </a>
     </div>
 
