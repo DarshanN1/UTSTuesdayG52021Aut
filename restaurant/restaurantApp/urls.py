@@ -3,6 +3,7 @@ from . import views
 
 urlpatterns = [
 	path('menu/',views.menu,name="menu"),
+	path('viewMenu/',views.viewMenu,name="viewMenu"),
 	path('',views.mainpg,name="home"),
 	path('update_item/',views.updateItem,name="update_item"),
 	path('loggedUser/',views.mainpgLog,name="loggedUser"),

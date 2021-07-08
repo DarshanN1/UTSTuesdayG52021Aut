@@ -175,7 +175,7 @@
 							<tr>
 								<td><img class="row-image" src="{{item.menu_item.image.url}}"></td>
 								<td>{{item.menu_item.name}}</td>
-								<td>{{item.menu_item.price|floatformat:2}}</td>
+								<td>${{item.menu_item.price|floatformat:2}}</td>
 								<td>{{item.quantity}}</td>
 								<td>
 									<div class="quantity">
@@ -184,7 +184,7 @@
 										<img data-menu_item={{item.menu_item.id}} data-action="remove" class="chg-quantity update-cart" src="{% static  'images/arrow-down.png' %}">
 									</div>
 								</td>
-								<td>${{item.get_total}}</td>
+								<td>${{item.get_total|floatformat:2}}</td>
 							</tr>
 							{% endfor %}
 						</table>

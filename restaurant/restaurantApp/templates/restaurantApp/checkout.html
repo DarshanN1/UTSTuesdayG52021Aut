@@ -289,9 +289,9 @@
 				</tr>
 
 				<tr>
-					<td>{% now "jS F Y H:i" %}</td>
-					<td>2</td>
-					<td>#6ASD3279JK12</td>
+					<td>{{booking.booking_date}} {{booking.booking_time}}</td>
+					<td>{{booking.number_of_guests}}</td>
+					<td>{{booking.booking_ref}}</td>
 				</tr>
 			</table>
 			<p>Email adddress: {{user.customer.email}}</p>

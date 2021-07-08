@@ -192,7 +192,7 @@
             <li><a href="{% url 'dashboard-admin' %}"> Staff </a></li>
             {% endif %}
             <li style="float:left"><a href="{% url 'home' %}"> Home </a></li>
-            <li style="float:left"><a href="{% url 'menu' %}"> Menu </a></li>
+            <li style="float:left"><a href="{% url 'viewMenu' %}"> Menu </a></li>
             <li style="float:left"><a href="{% url 'booking' %}"> Booking </a></li>
             <li style="float:left"><a href="#contact"> Contact </a></li>
             {% if request.user.is_active %}
@@ -284,7 +284,7 @@
             </tr>
             </table>
             {{form.errors}}
-            <input class="btn" type="submit" value="Continue with Booking">
+            <input class="btn" type="submit" value="Continue with Booking"> 
         </form>
 
         <!--a href="{% url 'menu' %}" class="btn save-booking">Continue with Booking</a-->

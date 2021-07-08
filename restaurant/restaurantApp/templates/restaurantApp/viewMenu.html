@@ -127,11 +127,6 @@
 				<li class="nav-item">
 					<a class="nav-link" href="#contact">Contacts</a>
 				</li>
-				{% if request.user.is_active %}
-				<li class="nav-item">
-					<a class="nav-link" href="{% url 'cart' %}">Order <span class="dot">{{order.get_cart_items}}</span></a>
-				</li>
-				{% endif %}
 			</ul>
 
 			<form method='GET' class="form-inline my-2 my-lg-0">
@@ -141,13 +136,6 @@
 			</form>
 		</div>
 	</nav>
-	{% if request.user.is_active %}
-	<div class="header">
-		<div class="row">
-			<h3>Step 2: Create an Order</h3>
-		</div>
-	</div>
-	{% endif %}
 
 	<div class="container">
 		<br>
@@ -160,9 +148,6 @@
 					<h6><strong>{{menu_item.name}}</strong></h6>
 					<hr>
 					<p>{{menu_item.desc}}</p>
-					{% if request.user.is_active %}
-					<button data-menu_item={{menu_item.id}} data-action="add" class="btn btn-outline-secondary add-btn update-cart">Add to order</button>
-					{% endif %}
 					<a class="btn btn-outline-success" href="#">Options</a>
 					<h4 style="display: inline-block; float: right"><strong>${{menu_item.price|floatformat:2}}</strong></h4>
 				</div>

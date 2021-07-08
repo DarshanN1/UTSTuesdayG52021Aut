@@ -9,10 +9,12 @@ from .forms import BookingForm
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import Group
+from django.db.models.functions import Concat
 from django.contrib import messages
 from .decorators import unauthenticated_user,allowed_user,admin_only
 from .filters import MenuFilter
 import uuid
+from datetime import date
 
 # Create your views here.
 def menu(request):
@@ -144,9 +146,20 @@ def booking(request):
 			booking_date = booking_form.cleaned_data.get('booking_date')
 			booking_time = booking_form.cleaned_data.get('booking_time')
 			number_of_guests = booking_form.cleaned_data.get('number_of_guests')
-			booking = Booking.create(customer,name,phone,booking_date,booking_time,number_of_guests)
+
+			bdate = str(booking_date)
+			btime = booking_time.strftime('%H:%M')
+			bdate = bdate.replace('-','')
+			btime = btime.replace(':','')
+			num_guests = str(number_of_guests)
+			initials = ''.join([x[0] for x in name.split()])
+			initials = initials.upper()
+			transaction_id = initials + bdate + btime + num_guests
+
+			booking = Booking.create(customer,name,phone,booking_date,booking_time,number_of_guests,transaction_id)
 			booking.save()
-	context = {'booking_form':booking_form}
+			return redirect('menu')
+	context = {'booking_form':booking_form}	 
 	return render(request,'restaurantApp/booking.html',context)
 
 def account(request):
@@ -165,7 +178,7 @@ def checkout(request):
 	if request.user.is_authenticated:
 		customer = request.user.customer
 		order, created = Order.objects.get_or_create(customer=customer,complete=False,status='Pending')
-		#booking, created = Booking.objects.get_or_create(customer=customer,transaction_id='2348750401')
+		booking = Booking.objects.get(customer=customer,date_created=date.today())
 		items = order.orderitem_set.all()
 	else:
 		items = []
@@ -173,7 +186,7 @@ def checkout(request):
 	#remove loop
 	for i in range(items.count()):
 		print(items[i])
-	context = {'items':items, 'order':order}
+	context = {'items':items, 'order':order, 'booking':booking}
 	return render(request,'restaurantApp/checkout.html',context)
 
 def cart(request):
@@ -193,3 +206,8 @@ def cart(request):
 def test(request):
 	context = {}
 	return render(request,'restaurantApp/test.html',context)
+
+def viewMenu(request):
+	menu_items = MenuItem.objects.all()
+	context = {'menu_items' : menu_items}
+	return render(request,'restaurantApp/viewMenu.html',context)

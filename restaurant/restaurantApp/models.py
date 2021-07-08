@@ -57,7 +57,7 @@ class Booking(models.Model):
 	customer = models.ForeignKey(Customer,on_delete=models.SET_NULL,null=True, blank=True)
 	name = models.CharField(max_length=100,null=True,blank=True)
 	phone = models.CharField(max_length=10,null=True)
-	#dt_booking_created = models.DateField(auto_now_add=True)
+	date_created = models.DateField(auto_now_add=True)
 	booking_date = models.DateField(null=True,blank=True)
 	booking_time = models.TimeField(null=True,blank=True)
 	complete = models.BooleanField(default=False,null=True,blank=False)
@@ -67,15 +67,15 @@ class Booking(models.Model):
             MinValueValidator(1)
         ]
 	)
-	#special_req = models.CharField(max_length=200,null=True,blank=True)
 	#transaction_id = models.UUIDField(default=uuid.uuid4, unique=True, db_index=True, editable=False)
+	booking_ref = models.CharField(max_length=15,null=True,blank=True)
 
 	def __str__(self):
 		return (self.customer.name + " (" + str(self.id) + ")")
 
 	@classmethod
-	def create(cls,customer,name,phone,given_date,given_time,guests):
-		booking = cls(customer=customer,name=name,phone=phone,booking_date=given_date,booking_time=given_time,complete=True,number_of_guests=guests)
+	def create(cls,customer,name,phone,given_date,given_time,guests,transaction_id):
+		booking = cls(customer=customer,name=name,phone=phone,booking_date=given_date,booking_time=given_time,complete=True,number_of_guests=guests,booking_ref=transaction_id)
 		return booking
 
 class Table(models.Model):

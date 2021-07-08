@@ -5,8 +5,8 @@
     "\\restaurantApp",
     "\\restaurantApp\\templates",
     "\\restaurantApp\\templates\\restaurantApp",
-    "\\static",
-    "\\static\\js"
+    "\\static"
   ],
+  "SelectedNode": "\\restaurant\\settings.py",
   "PreviewInSolutionExplorer": false
 }
