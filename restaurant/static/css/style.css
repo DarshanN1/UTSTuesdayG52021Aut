@@ -25,7 +25,7 @@
 
 .midtext {
 	text-align: center;
-	top: 100px;
+	top: 50%;
 	left: 50%;
 	transform: translate(-50%,-50%);
 	background: black;
@@ -48,6 +48,10 @@ body {
 
 .registerbox {
 	text-align: center;
+	position: fixed;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%,-50%);
 	padding: 20px;
 }
 
@@ -102,10 +106,41 @@ body {
 
 /* Contacts */
 
+.contactsBox ul li {
+	width: 275px;
+	float: right;
+	margin: auto;
+	text-align: center;
+	padding-right: 30%;
+}
+
+.contactsBox {
+	width: 1200px;
+	float: right;
+	position: fixed;
+	top: 60%;
+	left: 50%;
+	transform: translate(-50%,-50%);
+}
+
+.contactText1 {
+	text-align: center;
+	position: fixed;
+	top: 55%;
+	left: 50%;
+	transform: translate(-50%,-50%);
+	background: black;
+	border-style: solid;
+	border-width: 5px;
+	border-radius: 10px;
+	width: 80%;
+	height: 300px;
+	padding: 20px;
+}
 
 .navbar {
   float: right;
-  color: #f2f2f2;
+  color: #000000;
   text-align: center;
   padding: 14px 16px;
   text-decoration: none;
@@ -166,52 +201,4 @@ body {
 
 .dropdown:hover .dropdown-content {
   display: block;
-}
-.footer {
-	background: #000;
-	color: #8a8a8a;
-	font-size: 14px;
-	margin-left: auto;
-	margin-right: auto;
-	border-top-color: white;
-	border-top-style: solid;
-	border-top-width: 5px;
-	border-top-color: white;
-}
-
-.logos {
-	padding: 10px;
-	text-align: center;
-	margin-bottom: 10px;
-	align-items: center;
-}
-
-.row {
-	display: flex;
-	flex-wrap: wrap;
-	justify-content: space-around;
-}
-
-.btn {
-	display: inline-block;
-	background: #ff523b;
-	display: inline-block;
-	color: #fff;
-	padding: 8px 30px;
-	margin: 30px 0;
-	border-radius: 30px;
-	transition: background 0.5s;
-}
-
-.btn:hover {
-	background: #4CAF50;
-	color: #fff;
-	padding: 8px 30px;
-	margin: 30px 0;
-	border-radius: 30px;
-	transition: background 0.5s;
-}
-
-.btn:hover {
-	background: #563434;
 }

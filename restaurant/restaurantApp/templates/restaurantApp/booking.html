@@ -154,6 +154,28 @@
             padding: 20px;
             width: 500px;
         }
+
+        .table tr,td{
+            border-bottom:1px solid white;
+        }
+
+        .input-group-text {
+            background: #f7ba5b !important;
+            color: white !important;
+            border: 0 !important;
+            border-radius: 0.25rem 0 0 0.25rem !important;
+        }
+
+        .input_user,
+        .input_pass:focus {
+            box-shadow: none !important;
+            outline: 0px !important;
+        }
+
+        #id_number_of_guests{
+            width: 50px;
+            height: 30px;
+        }
     </style>
 
 </head>
@@ -166,16 +188,19 @@
                     <img src="{% static 'images/logo.png' %}" width="60" height="25">
                 </a>
             </li>
+            {% if request.user.is_staff %}
+            <li><a href="{% url 'dashboard-admin' %}"> Staff </a></li>
+            {% endif %}
+            <li style="float:left"><a href="{% url 'home' %}"> Home </a></li>
+            <li style="float:left"><a href="{% url 'viewMenu' %}"> Menu </a></li>
+            <li style="float:left"><a href="{% url 'booking' %}"> Booking </a></li>
+            <li style="float:left"><a href="#contact"> Contact </a></li>
             {% if request.user.is_active %}
-            <li><a href="{% url 'login' %}"> Account </a></li>
+            <li><a href="{% url 'logout' %}"> Logout </a></li>
+            <li><a href="{% url 'account' %}"> Account </a></li>
+            {% else %}
+            <li><a href="{% url 'login' %}">Login</a></li
             {% endif %}
-            {% if request.user.is_anonymous %}
-            <li><a href="{% url 'login' %}"> Login </a></li>
-            {% endif %}
-            <li><a href="#contact"> Contact </a></li>
-            <li><a href="{% url 'booking' %}"> Booking </a></li>
-            <li><a href="{% url 'menu' %}"> Menu </a></li>
-            <li><a href="{% url 'home' %}"> Home </a></li>
         </ul>
     </div>
     <div class="header">
@@ -186,14 +211,21 @@
     <br><br><br>
     <div class="midtext">
 
-        <div class="row">
+        <!--div class="row">
             <h3>Select a Date and Time</h3>
         </div>
-        <input type="date" id="start" name="trip-start"
-               value="2021-29-04"
-               min="2021-29-04" max="2022-01-01"> <!--Link with current start date-->
-        <input type="time" id="appt" name="appt"
-               min="09:00" max="23:00" required>  <!--Link this with the restaurant opening hours-->
+        <input type="date" id="date" name="trip-start"
+               value="2021-23-06"
+               min="2021-23-06" max="2022-01-01"> <!--Link with current start date-->
+        <!--input type="time" id="time" name="appt"
+               min="09:00" max="23:00" required-->  <!--Link this with the restaurant opening hours-->
+
+        <!--script>
+            function getCurrentDate() {
+                document.getElementById('date').value = new Date().toDateInputValue();
+                document.getElementById('time').min = new Date().toDateInputValue();
+            }
+        </script>
 
         <br><br>
         <div class="row">
@@ -201,18 +233,61 @@
         </div>
 
         <button class="btn2" onclick="decrement()">-</button>
-        <input id=demoInput type=number min=0 max=10>
+        <input id=attendees type=number min=1 max=10>
         <button class="btn2" onclick="increment()">+</button>
 
         <script>
             function increment() {
-                document.getElementById('demoInput').stepUp();
+                document.getElementById('attendees').stepUp();
             } function decrement() {
-                document.getElementById('demoInput').stepDown();
+                document.getElementById('attendees').stepDown();
             }
         </script>
+
+        <br><br>
+        <div class="row">
+            <h3>Contact Details: </h3>
+            
+        </div>
+        <br-->
+        <h3>Please fill out the following:</h3>
         <br>
-        <a href="{% url 'menu' %}" class="btn">Continue with Booking    </a>
+        <form action="" method="POST">
+            {% csrf_token %}
+            <table class="table">
+            <tr>
+                <td>Choose date: </td>
+                <td>{{booking_form.booking_date}}<td>
+            </tr>
+            <tr>
+                <td>Choose time: </td>
+                <td>{{booking_form.booking_time}}<td>
+            </tr>
+            <tr>
+                <td>Number of attendees: </td>
+                <td><button class="btn2" onclick="decr()">-</button> {{booking_form.number_of_guests}} <button class="btn2" onclick="incr()">+</button><td>
+                <script>
+                    function incr() {
+                        document.getElementById('id_number_of_guests').stepUp();
+                    } function decr() {
+                        document.getElementById('id_number_of_guests').stepDown();
+                    }
+                </script>
+            </tr>
+            <tr>
+                <td>Your name: </td>
+                <td>{{booking_form.name}}<td>
+            </tr>
+            <tr>
+                <td>Phone number: </td>
+                <td>{{booking_form.phone}}<td>
+            </tr>
+            </table>
+            {{form.errors}}
+            <input class="btn" type="submit" value="Continue with Booking"> 
+        </form>
+
+        <!--a href="{% url 'menu' %}" class="btn save-booking">Continue with Booking</a-->
     </div>
 
     <br><br><br><br><br><br><br><br>
@@ -232,9 +307,6 @@
             </div>
         </div>
     </div>
-
-
-
 
 </body>
 

@@ -39,7 +39,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'datetimepicker',
     'crispy_forms',
-    'restaurantApp'
+    'restaurantApp',
+    'django_filters',
 ]
 
 MIDDLEWARE = [
@@ -106,9 +107,9 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/3.1/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
-
-TIME_ZONE = 'UTC'
+LANGUAGE_CODE = 'en-GB'
+DATE_INPUT_FORMATS = ['%d-%m-%Y']
+TIME_ZONE = 'Australia/Sydney'
 
 USE_I18N = True
 

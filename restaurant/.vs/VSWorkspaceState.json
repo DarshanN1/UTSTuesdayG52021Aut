@@ -6,8 +6,7 @@
     "\\restaurantApp\\templates",
     "\\restaurantApp\\templates\\restaurantApp",
     "\\static",
-    "\\static\\css"
+    "\\static\\js"
   ],
-  "SelectedNode": "\\restaurantApp\\templates\\restaurantApp\\login.html",
   "PreviewInSolutionExplorer": false
 }
