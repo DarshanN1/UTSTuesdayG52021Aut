@@ -25,6 +25,47 @@
 			border-radius: 50%;
 			display: inline-block;
 		}
+
+		.header {
+            background: #000;
+            color: #8a8a8a;
+            font-size: 14px;
+            margin-left: auto;
+            margin-right: auto;
+            padding-top: 10px;
+            padding-bottom: 5px;
+            border-color: white;
+            border-style: solid;
+            border-top-width: 5px;
+            border-bottom-width: 5px;
+            border-left: 0px;
+            border-right: 0px;
+            font-family: 'Josefin Sans';
+        }
+
+		.footer {
+            background: #000;
+            color: #8a8a8a;
+            font-size: 14px;
+            margin-left: auto;
+            margin-right: auto;
+            border-top-color: white;
+            border-top-style: solid;
+            border-top-width: 5px;
+            border-top-color: white;
+        }
+
+        .logos {
+            padding: 10px;
+            text-align: center;
+            margin-bottom: 10px;
+            align-items: center;
+        }
+        .row {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+        }
 	</style>
 
 	<script type="text/javascript">
@@ -84,7 +125,7 @@
 	        <a class="nav-link" href="{% url 'booking' %}">Booking</a>
 	      </li>
 		  <li class="nav-item">
-	        <a class="nav-link" href="{% url 'contact' %}">Contacts</a>
+	        <a class="nav-link" href="#contact">Contacts</a>
 	      </li>
 		  <li class="nav-item">
 	        <a class="nav-link" href="{% url 'cart' %}">Order <span class="dot">{{order.get_cart_items}}</span></a>
@@ -99,6 +140,12 @@
 	    </form>
 	  </div>
 	</nav>
+
+	<div class="header">
+        <div class="row">
+            <h3>Step 2: Create an Order</h3>
+        </div>
+    </div>
 	
 	<div class="container">
 		<br>
@@ -120,6 +167,24 @@
 		</div>
 		{% endblock content %}
 	</div>
+
+	<br><br><br><br><br><br><br><br><br><br><br><br>
+    <div class="footer">
+        <div class="row">
+            <div class="logos">
+                <h3 id="contact">Contact Us Here</h3> <p></p>
+                <a href="https://www.instagram.com/">
+                    <img src="{% static 'images/instagram.png' %}" width="75" height="75">
+                </a>
+                <a href="https://www.facebook.com/">
+                    <img src="{% static 'images/facebook.png' %}" width="75" height="75">
+                </a>
+                <a href="https://www.yelp.com/">
+                    <img src="{% static 'images/yelp.png' %}" width="75" height="75">
+                </a>
+            </div>
+        </div>
+    </div>
 
 
 	<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>

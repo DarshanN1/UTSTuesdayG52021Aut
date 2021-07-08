@@ -5,12 +5,14 @@ from django.http import JsonResponse
 import json
 from django.contrib.auth.forms import UserCreationForm
 from .forms import CreateUserForm
+from .forms import BookingForm
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import Group
 from django.contrib import messages
 from .decorators import unauthenticated_user,allowed_user,admin_only
 from .filters import MenuFilter
+import uuid
 
 # Create your views here.
 def menu(request):
@@ -18,7 +20,7 @@ def menu(request):
 
 	if request.user.is_authenticated:
 		customer = request.user.customer
-		order, created = Order.objects.get_or_create(customer=customer,complete=False)
+		order, created = Order.objects.get_or_create(customer=customer,complete=False,status='Pending')
 		items = order.orderitem_set.all()
 		cartItems = order.get_cart_items
 	else:
@@ -42,7 +44,7 @@ def updateItem(request):
 
 		customer = request.user.customer
 		item = MenuItem.objects.get(id=itemId)
-		order, created = Order.objects.get_or_create(customer=customer,complete=False)
+		order, created = Order.objects.get_or_create(customer=customer,complete=False,status='Pending')
 		#if the order already exists, then we do not make a new Order
 		#just add/substract from it
 		orderItem, created = OrderItem.objects.get_or_create(order=order,menu_item=item)
@@ -132,7 +134,19 @@ def registration(request):
 
 @login_required(login_url='login')
 def booking(request):
-	context = {}
+	booking_form = BookingForm()
+	if request.method == 'POST':
+		booking_form = BookingForm(request.POST)
+		if booking_form.is_valid():
+			customer = request.user.customer
+			name = booking_form.cleaned_data.get('name')
+			phone = booking_form.cleaned_data.get('phone')
+			booking_date = booking_form.cleaned_data.get('booking_date')
+			booking_time = booking_form.cleaned_data.get('booking_time')
+			number_of_guests = booking_form.cleaned_data.get('number_of_guests')
+			booking = Booking.create(customer,name,phone,booking_date,booking_time,number_of_guests)
+			booking.save()
+	context = {'booking_form':booking_form}
 	return render(request,'restaurantApp/booking.html',context)
 
 def account(request):
@@ -150,7 +164,7 @@ def contact(request):
 def checkout(request):
 	if request.user.is_authenticated:
 		customer = request.user.customer
-		order, created = Order.objects.get_or_create(customer=customer,complete=False)
+		order, created = Order.objects.get_or_create(customer=customer,complete=False,status='Pending')
 		#booking, created = Booking.objects.get_or_create(customer=customer,transaction_id='2348750401')
 		items = order.orderitem_set.all()
 	else:

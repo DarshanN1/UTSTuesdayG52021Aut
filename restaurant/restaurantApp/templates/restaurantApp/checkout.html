@@ -151,6 +151,23 @@
 		  transition: all 5s ease-in-out;
 		}
 
+		.header {
+            background: #000;
+            color: #8a8a8a;
+            font-size: 14px;
+            margin-left: auto;
+            margin-right: auto;
+            padding-top: 10px;
+            padding-bottom: 5px;
+            border-color: white;
+            border-style: solid;
+            border-top-width: 5px;
+            border-bottom-width: 5px;
+            border-left: 0px;
+            border-right: 0px;
+            font-family: 'Josefin Sans';
+        }
+
 		.popup h2 {
 		  margin-top: 0;
 		  color: #333;
@@ -173,6 +190,12 @@
 		  max-height: 30%;
 		  overflow: auto;
 		}
+
+		.row {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+        }
 
 		@media screen and (max-width: 700px){
 		  .box{
@@ -239,15 +262,18 @@
 			<a class="nav-link" href="{% url 'booking' %}">Booking</a>
 			</li>
 			<li class="nav-item">
-			<a class="nav-link" href="{% url 'contact' %}">Contacts</a>
-			</li>
-			<li class="nav-item">
 			<a class="nav-link" href="{% url 'cart' %}">Order <span class="dot">{{order.get_cart_items}}</span></a>
 			
 			</li>
 		</ul>
 		</div>
 	</nav>
+
+	<div class="header">
+        <div class="row">
+            <h3>Step 4: Checkout</h3>
+        </div>
+    </div>
 
     <div class="row" style="padding:10px">
 		<div class="col-lg-13"  style="width:90.5%">
@@ -263,7 +289,7 @@
 				</tr>
 
 				<tr>
-					<td>21 June 2021 at 11:30am</td>
+					<td>{% now "jS F Y H:i" %}</td>
 					<td>2</td>
 					<td>#6ASD3279JK12</td>
 				</tr>
