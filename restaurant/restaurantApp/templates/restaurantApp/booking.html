@@ -154,6 +154,7 @@
             padding: 20px;
             width: 500px;
         }
+<<<<<<< HEAD
 
         .table tr,td{
             border-bottom:1px solid white;
@@ -176,6 +177,8 @@
             width: 50px;
             height: 30px;
         }
+=======
+>>>>>>> 6d8cbc5d2ecc5fe698051dd3dee45a891a00568b
     </style>
 
 </head>
@@ -192,7 +195,11 @@
             <li><a href="{% url 'dashboard-admin' %}"> Staff </a></li>
             {% endif %}
             <li style="float:left"><a href="{% url 'home' %}"> Home </a></li>
+<<<<<<< HEAD
             <li style="float:left"><a href="{% url 'viewMenu' %}"> Menu </a></li>
+=======
+            <li style="float:left"><a href="{% url 'menu' %}"> Menu </a></li>
+>>>>>>> 6d8cbc5d2ecc5fe698051dd3dee45a891a00568b
             <li style="float:left"><a href="{% url 'booking' %}"> Booking </a></li>
             <li style="float:left"><a href="#contact"> Contact </a></li>
             {% if request.user.is_active %}
@@ -205,12 +212,17 @@
     </div>
     <div class="header">
         <div class="row">
+<<<<<<< HEAD
             <h3>Step 1: Booking</h3>
+=======
+            <h3 style="color:white">Step 1: Booking</h3>
+>>>>>>> 6d8cbc5d2ecc5fe698051dd3dee45a891a00568b
         </div>
     </div>
     <br><br><br>
     <div class="midtext">
 
+<<<<<<< HEAD
         <!--div class="row">
             <h3>Select a Date and Time</h3>
         </div>
@@ -224,6 +236,21 @@
             function getCurrentDate() {
                 document.getElementById('date').value = new Date().toDateInputValue();
                 document.getElementById('time').min = new Date().toDateInputValue();
+=======
+        <div class="row">
+            <h3>Select a Date and Time</h3>
+        </div>
+        <input type="date" id="start" name="trip-start"
+               value="2021-23-06"
+               min="2021-23-06" max="2022-01-01"> <!--Link with current start date-->
+        <input type="time" id="appt" name="appt"
+               min="09:00" max="23:00" required>  <!--Link this with the restaurant opening hours-->
+
+        <script>
+            function getCurrentDate() {
+                document.getElementById('start').value = new Date().toDateInputValue();
+                document.getElementById('start').min = new Date().toDateInputValue();
+>>>>>>> 6d8cbc5d2ecc5fe698051dd3dee45a891a00568b
             }
         </script>
 
@@ -233,20 +260,31 @@
         </div>
 
         <button class="btn2" onclick="decrement()">-</button>
+<<<<<<< HEAD
         <input id=attendees type=number min=1 max=10>
+=======
+        <input id=demoInput type=number min=1 max=10>
+>>>>>>> 6d8cbc5d2ecc5fe698051dd3dee45a891a00568b
         <button class="btn2" onclick="increment()">+</button>
 
         <script>
             function increment() {
+<<<<<<< HEAD
                 document.getElementById('attendees').stepUp();
             } function decrement() {
                 document.getElementById('attendees').stepDown();
+=======
+                document.getElementById('demoInput').stepUp();
+            } function decrement() {
+                document.getElementById('demoInput').stepDown();
+>>>>>>> 6d8cbc5d2ecc5fe698051dd3dee45a891a00568b
             }
         </script>
 
         <br><br>
         <div class="row">
             <h3>Contact Details: </h3>
+<<<<<<< HEAD
             
         </div>
         <br-->
@@ -288,6 +326,30 @@
         </form>
 
         <!--a href="{% url 'menu' %}" class="btn save-booking">Continue with Booking</a-->
+=======
+        </div>
+
+        <div class="row">
+            <!--To get to booking, user must be logged in, so some info can be prefilled-->
+            {% if user.customer.name != '' %}
+            <p>Name: {{user.customer.name}}</p>
+            {% else %}
+            <p>Enter name: </p>
+            {% endif %}
+        </div>
+        <div class="row">
+            {% if user.customer.phone != '' %}
+            <p>Phone number: {{user.customer.phone}}</p>
+            {% else %}
+            <p>Enter phone number: </p>
+            {% endif %}
+        </div>
+        <div class="row">
+            <p>Email: {{user.customer.email}}</p>
+        </div>
+
+        <a href="{% url 'menu' %}" class="btn">Continue with Booking</a>
+>>>>>>> 6d8cbc5d2ecc5fe698051dd3dee45a891a00568b
     </div>
 
     <br><br><br><br><br><br><br><br>

@@ -107,8 +107,13 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/3.1/topics/i18n/
 
+<<<<<<< HEAD
 LANGUAGE_CODE = 'en-GB'
 DATE_INPUT_FORMATS = ['%d-%m-%Y']
+=======
+LANGUAGE_CODE = 'en-us'
+
+>>>>>>> 6d8cbc5d2ecc5fe698051dd3dee45a891a00568b
 TIME_ZONE = 'Australia/Sydney'
 
 USE_I18N = True

@@ -55,6 +55,7 @@ class MenuItem(models.Model):
 class Booking(models.Model):
 	"""Assuming a customer can make a single booking at a given time"""
 	customer = models.ForeignKey(Customer,on_delete=models.SET_NULL,null=True, blank=True)
+<<<<<<< HEAD
 	name = models.CharField(max_length=100,null=True,blank=True)
 	phone = models.CharField(max_length=10,null=True)
 	date_created = models.DateField(auto_now_add=True)
@@ -77,6 +78,16 @@ class Booking(models.Model):
 	def create(cls,customer,name,phone,given_date,given_time,guests,transaction_id):
 		booking = cls(customer=customer,name=name,phone=phone,booking_date=given_date,booking_time=given_time,complete=True,number_of_guests=guests,booking_ref=transaction_id)
 		return booking
+=======
+	dt_booking_created = models.DateTimeField(auto_now_add=True)
+	complete = models.BooleanField(default=False,null=True,blank=False)
+	number_of_guests = models.IntegerField()
+	#special_req = models.CharField(max_length=200,null=True,blank=True)
+	transaction_id = models.UUIDField(default=uuid.uuid4, unique=True, db_index=True, editable=False)
+
+	def __str__(self):
+		return self.customer.name
+>>>>>>> 6d8cbc5d2ecc5fe698051dd3dee45a891a00568b
 
 class Table(models.Model):
 	restaurant = models.ForeignKey(Restaurant,on_delete=models.CASCADE)

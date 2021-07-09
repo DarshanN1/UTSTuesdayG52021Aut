@@ -25,56 +25,30 @@
 			border-radius: 50%;
 			display: inline-block;
 		}
-<<<<<<< HEAD
-
-=======
-		.box-element{
-			width:70%;
-			transform:translate(50,0);
-			margin: auto;
-			width: 60%;
-			padding: 10px;
-		}
-		tr{
-			text-align:center;
-		}
->>>>>>> 6d8cbc5d2ecc5fe698051dd3dee45a891a00568b
-		.header {
+		.footer {
             background: #000;
             color: #8a8a8a;
             font-size: 14px;
             margin-left: auto;
             margin-right: auto;
-            padding-top: 10px;
-            padding-bottom: 5px;
-            border-color: white;
-            border-style: solid;
+            border-top-color: white;
+            border-top-style: solid;
             border-top-width: 5px;
-            border-bottom-width: 5px;
-            border-left: 0px;
-            border-right: 0px;
-            font-family: 'Josefin Sans';
+            border-top-color: white;
         }
 
-		.row {
+        .logos {
+            padding: 10px;
+            text-align: center;
+            margin-bottom: 10px;
+            align-items: center;
+        }
+
+        .row {
             display: flex;
             flex-wrap: wrap;
             justify-content: space-around;
         }
-<<<<<<< HEAD
-
-		.box-element{
-			width:70%;
-			transform:translate(50,0);
-			margin: auto;
-			width: 60%;
-			padding: 10px;
-		}
-		tr{
-			text-align:center;
-		}
-=======
->>>>>>> 6d8cbc5d2ecc5fe698051dd3dee45a891a00568b
 	</style>
 
 	<script type="text/javascript">
@@ -95,6 +69,7 @@
 		}
 		var csrftoken = getToken('csrftoken');
 	</script>
+
 
 </head>
 <body>
@@ -133,101 +108,60 @@
 	        <a class="nav-link" href="{% url 'booking' %}">Booking</a>
 	      </li>
 		  <li class="nav-item">
+	        <a class="nav-link" href="#contact">Contacts</a>
+	      </li>
+		  <li class="nav-item">
 	        <a class="nav-link" href="{% url 'cart' %}">Order <span class="dot">{{order.get_cart_items}}</span></a>
 			
 	      </li>
 	    </ul>
 
+	    <form method='GET' class="form-inline my-2 my-lg-0">
+		  {{itemFilter.form}}
+	      &nbsp;&nbsp;<button class="btn btn-outline-success my-2 my-sm-0" type="submit" value="{{ query|escape }}">Search</button>
+		  <!--input class="form-control mr-sm-2" type="text" name="q" placeholder="Search" aria-label="Search"-->
+	    </form>
 	  </div>
 	</nav>
-<<<<<<< HEAD
-
-	<div class="header">
-        <div class="row">
-            <h3>Step 3: View Cart</h3>
-        </div>
-    </div>
-
-
-=======
-	<div class="header">
-        <div class="row">
-            <h3 style="color:white">Step 3: View Cart</h3>
-        </div>
-    </div>
-	<br><br><br>
->>>>>>> 6d8cbc5d2ecc5fe698051dd3dee45a891a00568b
-	<div class="row">
-		<div class="col-lg-12">
-			<div class="box-element">
-
-				<a class="btn btn-outline-dark" style="right:30%" href="{% url 'menu' %}">&#x2190; Back to Menu</a>
-				<br>
-				<p></p>
-				<p>Your booking will be held for another 8 minutes until you proceed to checkout.</p>
-				<br>
-				<table class="table">
-					<tr>
-						<th><h5>Items: <strong>{{order.get_cart_items}}</strong></h5></th>
-						<th><h5>Total: <strong>${{order.get_cart_total|floatformat:2}}</strong></h5></th>
-						<th>
-							<a  style="float:right; margin:5px;" class="btn btn-success" href="{% url 'checkout' %}">Proceed to Checkout</a>
-							<a  style="float:right; margin:5px;  background-color: red; border: 1px solid transparent;" class="btn btn-success" href="">Cancel Order</a>
-						</th>
-					</tr>
-				</table>
-
-			</div>
-
-			<br>
-			<div class="box-element">
-				
-				<div class="col-md-13">
-					<h5>Items in Cart:</h5>
+	
+	<div class="container">
+		<br>
+        {% block content %}
+		<div class="row">
+		{% for menu_item in menu_items %}
+			<div class="col-lg-4">
+				<img class="thumbnail" src="{{menu_item.image.url}}">
+				<div class="box-element menuitem">
+					<h6><strong>{{menu_item.name}}</strong></h6>
 					<hr>
-					<div class="card card-body">
-						<table class="table table-sm">
-							<tr>
-								<th></th>
-								<th>Item</th>
-								<th>Price</th>
-								<th>Quantity</th>
-								<th></th>
-								<th>Sub-total</th>
-							</tr>
-
-							{% for item in items %}
-							<tr>
-								<td><img class="row-image" src="{{item.menu_item.image.url}}"></td>
-								<td>{{item.menu_item.name}}</td>
-<<<<<<< HEAD
-								<td>${{item.menu_item.price|floatformat:2}}</td>
-=======
-								<td>{{item.menu_item.price|floatformat:2}}</td>
->>>>>>> 6d8cbc5d2ecc5fe698051dd3dee45a891a00568b
-								<td>{{item.quantity}}</td>
-								<td>
-									<div class="quantity">
-										<img data-menu_item={{item.menu_item.id}} data-action="add" class="chg-quantity update-cart" src="{% static  'images/arrow-up.png' %}">
-					
-										<img data-menu_item={{item.menu_item.id}} data-action="remove" class="chg-quantity update-cart" src="{% static  'images/arrow-down.png' %}">
-									</div>
-								</td>
-<<<<<<< HEAD
-								<td>${{item.get_total|floatformat:2}}</td>
-=======
-								<td>${{item.get_total}}</td>
->>>>>>> 6d8cbc5d2ecc5fe698051dd3dee45a891a00568b
-							</tr>
-							{% endfor %}
-						</table>
-					</div>
+					<p>{{menu_item.desc}}</p>
+					<button data-menu_item={{menu_item.id}} data-action="add" class="btn btn-outline-secondary add-btn update-cart">Add to order</button>
+					<a class="btn btn-outline-success" href="#">Options</a>
+					<h4 style="display: inline-block; float: right"><strong>${{menu_item.price|floatformat:2}}</strong></h4>
 				</div>
-			
 			</div>
+		{% endfor %}
 		</div>
+		{% endblock content %}
 	</div>
 
+	<br><br><br><br><br><br><br><br>
+    <div class="footer">
+        <div class="row">
+            <div class="logos">
+                <h3 id="contact">Contact Us Here</h3> <p></p>
+                <a href="https://www.instagram.com/">
+                    <img src="{% static 'images/instagram.png' %}" width="75" height="75">
+                </a>
+                <a href="https://www.facebook.com/">
+                    <img src="{% static 'images/facebook.png' %}" width="75" height="75">
+                </a>
+                <a href="https://www.yelp.com/">
+                    <img src="{% static 'images/yelp.png' %}" width="75" height="75">
+                </a>
+            </div>
+        </div>
+    </div>
 	<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
 
 	<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>

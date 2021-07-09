@@ -5,8 +5,15 @@
     "\\restaurantApp",
     "\\restaurantApp\\templates",
     "\\restaurantApp\\templates\\restaurantApp",
+<<<<<<< HEAD
     "\\static"
   ],
   "SelectedNode": "\\restaurant\\settings.py",
+=======
+    "\\static",
+    "\\static\\js"
+  ],
+  "SelectedNode": "\\restaurantApp\\templates\\restaurantApp\\mainpg.html",
+>>>>>>> 6d8cbc5d2ecc5fe698051dd3dee45a891a00568b
   "PreviewInSolutionExplorer": false
 }

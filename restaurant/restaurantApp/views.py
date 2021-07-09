@@ -5,6 +5,7 @@ from django.http import JsonResponse
 import json
 from django.contrib.auth.forms import UserCreationForm
 from .forms import CreateUserForm
+<<<<<<< HEAD
 from .forms import BookingForm
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
@@ -15,6 +16,14 @@ from .decorators import unauthenticated_user,allowed_user,admin_only
 from .filters import MenuFilter
 import uuid
 from datetime import date
+=======
+from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import Group
+from django.contrib import messages
+from .decorators import unauthenticated_user,allowed_user,admin_only
+from .filters import MenuFilter
+>>>>>>> 6d8cbc5d2ecc5fe698051dd3dee45a891a00568b
 
 # Create your views here.
 def menu(request):
@@ -22,7 +31,11 @@ def menu(request):
 
 	if request.user.is_authenticated:
 		customer = request.user.customer
+<<<<<<< HEAD
 		order, created = Order.objects.get_or_create(customer=customer,complete=False,status='Pending')
+=======
+		order, created = Order.objects.get_or_create(customer=customer,status='Pending',complete=False)
+>>>>>>> 6d8cbc5d2ecc5fe698051dd3dee45a891a00568b
 		items = order.orderitem_set.all()
 		cartItems = order.get_cart_items
 	else:
@@ -46,7 +59,11 @@ def updateItem(request):
 
 		customer = request.user.customer
 		item = MenuItem.objects.get(id=itemId)
+<<<<<<< HEAD
 		order, created = Order.objects.get_or_create(customer=customer,complete=False,status='Pending')
+=======
+		order, created = Order.objects.get_or_create(customer=customer,status='Pending',complete=False)
+>>>>>>> 6d8cbc5d2ecc5fe698051dd3dee45a891a00568b
 		#if the order already exists, then we do not make a new Order
 		#just add/substract from it
 		orderItem, created = OrderItem.objects.get_or_create(order=order,menu_item=item)
@@ -136,6 +153,7 @@ def registration(request):
 
 @login_required(login_url='login')
 def booking(request):
+<<<<<<< HEAD
 	booking_form = BookingForm()
 	if request.method == 'POST':
 		booking_form = BookingForm(request.POST)
@@ -160,6 +178,9 @@ def booking(request):
 			booking.save()
 			return redirect('menu')
 	context = {'booking_form':booking_form}	 
+=======
+	context = {}
+>>>>>>> 6d8cbc5d2ecc5fe698051dd3dee45a891a00568b
 	return render(request,'restaurantApp/booking.html',context)
 
 def account(request):
@@ -177,8 +198,13 @@ def contact(request):
 def checkout(request):
 	if request.user.is_authenticated:
 		customer = request.user.customer
+<<<<<<< HEAD
 		order, created = Order.objects.get_or_create(customer=customer,complete=False,status='Pending')
 		booking = Booking.objects.get(customer=customer,date_created=date.today())
+=======
+		order, created = Order.objects.get_or_create(customer=customer,status='Pending',complete=False)
+		#booking, created = Booking.objects.get_or_create(customer=customer,transaction_id='2348750401')
+>>>>>>> 6d8cbc5d2ecc5fe698051dd3dee45a891a00568b
 		items = order.orderitem_set.all()
 	else:
 		items = []
@@ -186,7 +212,11 @@ def checkout(request):
 	#remove loop
 	for i in range(items.count()):
 		print(items[i])
+<<<<<<< HEAD
 	context = {'items':items, 'order':order, 'booking':booking}
+=======
+	context = {'items':items, 'order':order}
+>>>>>>> 6d8cbc5d2ecc5fe698051dd3dee45a891a00568b
 	return render(request,'restaurantApp/checkout.html',context)
 
 def cart(request):
@@ -205,9 +235,13 @@ def cart(request):
 
 def test(request):
 	context = {}
+<<<<<<< HEAD
 	return render(request,'restaurantApp/test.html',context)
 
 def viewMenu(request):
 	menu_items = MenuItem.objects.all()
 	context = {'menu_items' : menu_items}
 	return render(request,'restaurantApp/viewMenu.html',context)
+=======
+	return render(request,'restaurantApp/test.html',context)
+>>>>>>> 6d8cbc5d2ecc5fe698051dd3dee45a891a00568b
