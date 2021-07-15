@@ -25,6 +25,24 @@
 			border-radius: 50%;
 			display: inline-block;
 		}
+
+		.header {
+            background: #000;
+            color: #8a8a8a;
+            font-size: 14px;
+            margin-left: auto;
+            margin-right: auto;
+            padding-top: 10px;
+            padding-bottom: 5px;
+            border-color: white;
+            border-style: solid;
+            border-top-width: 5px;
+            border-bottom-width: 5px;
+            border-left: 0px;
+            border-right: 0px;
+            font-family: 'Josefin Sans';
+        }
+
 		.footer {
             background: #000;
             color: #8a8a8a;
@@ -43,7 +61,6 @@
             margin-bottom: 10px;
             align-items: center;
         }
-
         .row {
             display: flex;
             flex-wrap: wrap;
@@ -74,94 +91,106 @@
 </head>
 <body>
 	<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-	  <!--a class="navbar-brand" href="{% url 'menu' %}">Menu</a-->
+		<!--a class="navbar-brand" href="{% url 'menu' %}">Menu</a-->
 		<a href="{% url 'home' %}">
-            <img src ="{% static 'images/logo.png' %}" width="60" height="25">
-        </a>
+			<img src="{% static 'images/logo.png' %}" width="60" height="25">
+		</a>
 		<li class="nav-item">
-	        <a class="nav-link disabled" href=""></a>
-	    </li>
-	  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-	    <span class="navbar-toggler-icon"></span>
-	  </button>
+			<a class="nav-link disabled" href=""></a>
+		</li>
+		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+			<span class="navbar-toggler-icon"></span>
+		</button>
 
-	  <div class="collapse navbar-collapse" id="navbarSupportedContent">
-	    <ul class="navbar-nav mr-auto">
-	      <li class="nav-item active">
-	        <a class="nav-link" href="{% url 'menu' %}">Menu <span class="sr-only">(current)</span></a>
-	      </li>
-	      <li class="nav-item dropdown">
-	        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-	          Lunch
-	        </a>
-	        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-	          <a class="dropdown-item" href="#">Dinner</a>
-	          <a class="dropdown-item" href="#">Desserts</a>
-	          <div class="dropdown-divider"></div>
-	          <a class="dropdown-item" href="#">Specials</a>
-	        </div>
-	      </li>
-	      <!--li class="nav-item">
-	        <a class="nav-link disabled" href="#">Order</a>
-	      </li-->
-		  <li class="nav-item">
-	        <a class="nav-link" href="{% url 'booking' %}">Booking</a>
-	      </li>
-		  <li class="nav-item">
-	        <a class="nav-link" href="#contact">Contacts</a>
-	      </li>
-		  <li class="nav-item">
-	        <a class="nav-link" href="{% url 'cart' %}">Order <span class="dot">{{order.get_cart_items}}</span></a>
-			
-	      </li>
-	    </ul>
+		<div class="collapse navbar-collapse" id="navbarSupportedContent">
+			<ul class="navbar-nav mr-auto">
+				<li class="nav-item active">
+					<a class="nav-link" href="{% url 'menu' %}">Menu <span class="sr-only">(current)</span></a>
+				</li>
+				<li class="nav-item dropdown">
+					<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+						Lunch
+					</a>
+					<div class="dropdown-menu" aria-labelledby="navbarDropdown">
+						<a class="dropdown-item" href="#">Dinner</a>
+						<a class="dropdown-item" href="#">Desserts</a>
+						<div class="dropdown-divider"></div>
+						<a class="dropdown-item" href="#">Specials</a>
+					</div>
+				</li>
+				<!--li class="nav-item">
+				  <a class="nav-link disabled" href="#">Order</a>
+				</li-->
+				<li class="nav-item">
+					<a class="nav-link" href="{% url 'booking' %}">Booking</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" href="#contact">Contacts</a>
+				</li>
+				{% if request.user.is_active %}
+				<li class="nav-item">
+					<a class="nav-link" href="{% url 'cart' %}">Order <span class="dot">{{order.get_cart_items}}</span></a>
+				</li>
+				{% endif %}
+			</ul>
 
-	    <form method='GET' class="form-inline my-2 my-lg-0">
-		  {{itemFilter.form}}
-	      &nbsp;&nbsp;<button class="btn btn-outline-success my-2 my-sm-0" type="submit" value="{{ query|escape }}">Search</button>
-		  <!--input class="form-control mr-sm-2" type="text" name="q" placeholder="Search" aria-label="Search"-->
-	    </form>
-	  </div>
+			<form method='GET' class="form-inline my-2 my-lg-0">
+				{{itemFilter.form}}
+				&nbsp;&nbsp;<button class="btn btn-outline-success my-2 my-sm-0" type="submit" value="{{ query|escape }}">Search</button>
+				<!--input class="form-control mr-sm-2" type="text" name="q" placeholder="Search" aria-label="Search"-->
+			</form>
+		</div>
 	</nav>
-	
+	{% if request.user.is_active %}
+	<div class="header">
+		<div class="row">
+			<h3>Step 2: Create an Order</h3>
+		</div>
+	</div>
+	{% endif %}
+
 	<div class="container">
 		<br>
-        {% block content %}
+		{% block content %}
 		<div class="row">
-		{% for menu_item in menu_items %}
+			{% for menu_item in menu_items %}
 			<div class="col-lg-4">
 				<img class="thumbnail" src="{{menu_item.image.url}}">
 				<div class="box-element menuitem">
 					<h6><strong>{{menu_item.name}}</strong></h6>
 					<hr>
 					<p>{{menu_item.desc}}</p>
+					{% if request.user.is_active %}
 					<button data-menu_item={{menu_item.id}} data-action="add" class="btn btn-outline-secondary add-btn update-cart">Add to order</button>
+					{% endif %}
 					<a class="btn btn-outline-success" href="#">Options</a>
 					<h4 style="display: inline-block; float: right"><strong>${{menu_item.price|floatformat:2}}</strong></h4>
 				</div>
 			</div>
-		{% endfor %}
+			{% endfor %}
 		</div>
 		{% endblock content %}
 	</div>
 
-	<br><br><br><br><br><br><br><br>
-    <div class="footer">
-        <div class="row">
-            <div class="logos">
-                <h3 id="contact">Contact Us Here</h3> <p></p>
-                <a href="https://www.instagram.com/">
-                    <img src="{% static 'images/instagram.png' %}" width="75" height="75">
-                </a>
-                <a href="https://www.facebook.com/">
-                    <img src="{% static 'images/facebook.png' %}" width="75" height="75">
-                </a>
-                <a href="https://www.yelp.com/">
-                    <img src="{% static 'images/yelp.png' %}" width="75" height="75">
-                </a>
-            </div>
-        </div>
-    </div>
+	<br><br><br><br><br><br><br><br><br><br><br><br>
+	<div class="footer">
+		<div class="row">
+			<div class="logos">
+				<h3 id="contact">Contact Us Here</h3> <p></p>
+				<a href="https://www.instagram.com/">
+					<img src="{% static 'images/instagram.png' %}" width="75" height="75">
+				</a>
+				<a href="https://www.facebook.com/">
+					<img src="{% static 'images/facebook.png' %}" width="75" height="75">
+				</a>
+				<a href="https://www.yelp.com/">
+					<img src="{% static 'images/yelp.png' %}" width="75" height="75">
+				</a>
+			</div>
+		</div>
+	</div>
+
+
 	<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
 
 	<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>

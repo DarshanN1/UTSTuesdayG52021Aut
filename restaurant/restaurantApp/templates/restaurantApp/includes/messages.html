@@ -1,0 +1,11 @@
+{% if messages %}
+<ul class="messages">
+    {% for message in messages %}
+    <div class="alert alert-warning alert-dismissible" style="width:850px; margin-right:auto; margin-left:auto;">
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+        <strong>Request Failed.</strong> There is already a booking under your account. Please consider changing the existing booking.
+    </div>
+
+    {% endfor %}
+</ul>
+{% endif %}

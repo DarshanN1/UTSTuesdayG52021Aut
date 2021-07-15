@@ -151,7 +151,6 @@
 		  transition: all 5s ease-in-out;
 		}
 
-<<<<<<< HEAD
 		.header {
             background: #000;
             color: #8a8a8a;
@@ -169,8 +168,6 @@
             font-family: 'Josefin Sans';
         }
 
-=======
->>>>>>> 6d8cbc5d2ecc5fe698051dd3dee45a891a00568b
 		.popup h2 {
 		  margin-top: 0;
 		  color: #333;
@@ -194,15 +191,12 @@
 		  overflow: auto;
 		}
 
-<<<<<<< HEAD
 		.row {
             display: flex;
             flex-wrap: wrap;
             justify-content: space-around;
         }
 
-=======
->>>>>>> 6d8cbc5d2ecc5fe698051dd3dee45a891a00568b
 		@media screen and (max-width: 700px){
 		  .box{
 			width: 70%;
@@ -211,31 +205,6 @@
 			width: 70%;
 		  }
 		}
-<<<<<<< HEAD
-=======
-		.header {
-            background: #000;
-            color: #8a8a8a;
-            font-size: 14px;
-            margin-left: auto;
-            margin-right: auto;
-            padding-top: 10px;
-            padding-bottom: 5px;
-            border-color: white;
-            border-style: solid;
-            border-top-width: 5px;
-            border-bottom-width: 5px;
-            border-left: 0px;
-            border-right: 0px;
-            font-family: 'Josefin Sans';
-        }
-
-		.row {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: space-around;
-        }
->>>>>>> 6d8cbc5d2ecc5fe698051dd3dee45a891a00568b
 
 	</style>
 
@@ -294,15 +263,11 @@
 			</li>
 			<li class="nav-item">
 			<a class="nav-link" href="{% url 'cart' %}">Order <span class="dot">{{order.get_cart_items}}</span></a>
-<<<<<<< HEAD
 			
-=======
->>>>>>> 6d8cbc5d2ecc5fe698051dd3dee45a891a00568b
 			</li>
 		</ul>
 		</div>
 	</nav>
-<<<<<<< HEAD
 
 	<div class="header">
         <div class="row">
@@ -310,14 +275,6 @@
         </div>
     </div>
 
-=======
-    <div class="header">
-        <div class="row">
-            <h3 style="color:white">Step 4: Checkout</h3>
-        </div>
-    </div>
-    <br>
->>>>>>> 6d8cbc5d2ecc5fe698051dd3dee45a891a00568b
     <div class="row" style="padding:10px">
 		<div class="col-lg-13"  style="width:90.5%">
 			<div class="box-element" id="form-wrapper">
@@ -332,21 +289,12 @@
 				</tr>
 
 				<tr>
-<<<<<<< HEAD
 					<td>{{booking.booking_date}} {{booking.booking_time}}</td>
 					<td>{{booking.number_of_guests}}</td>
 					<td>{{booking.booking_ref}}</td>
 				</tr>
 			</table>
 			<p>Email adddress: {{user.customer.email}}</p>
-=======
-					<td>{% now "jS M Y h:ia" %}</td>
-					<td>2</td>
-					<td>#6ASD3279JK12</td>
-				</tr>
-			</table>
-			<p>Email Address: {{user.customer.email}}</p>
->>>>>>> 6d8cbc5d2ecc5fe698051dd3dee45a891a00568b
 			<a  class="btn btn-outline-dark" href="{% url 'booking' %}">Edit Booking</a>
 			</div>
 

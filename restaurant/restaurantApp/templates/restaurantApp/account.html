@@ -1,21 +1,44 @@
-<!DOCTYPE html>
+{% extends 'restaurantApp/dashboard.html' %}
+{% block content %}
+{% include 'restaurantApp/profile-status.html' %}
 
-<html lang="en">
-<head>
-  <meta charset="utf-8">
+<br>
 
-  <title>User Account</title>
+<div class="row" style="margin-right:auto; margin-left:auto">
+	<div class="col-md-7">
+		<h5>BOOKING HISTORY:</h5>
+		<hr>
+		<div class="card card-body">
+			<table class="table table-sm">
+				<tr>
+					<th>Course</th>
+					<th>Date</th>
+					<th>Time</th>
+					<th>Order Invoice</th>
+					<th>Rate your experience</th>
+				</tr>
 
-</head>
+				{% for booking in prev_bookings %}
+					<tr>
+						<td>{{booking.booking_event}}</td>
+						<td>{{booking.booking_date}}</td>
+						<td>{{booking.booking_time}}</td>
+						<td><a href="">Click here</a></td>
+						<td>
+							<span class="fa fa-star checked"></span>
+							<span class="fa fa-star checked"></span>
+							<span class="fa fa-star checked"></span>
+							<span class="fa fa-star checked"></span>
+							<span class="fa fa-star"></span>
+						</td>
+					</tr>
+				{% endfor %}
+			</table>
+		</div>
+	</div>
 
-<body>
-  <h1>This is your account page.</h1>
-  {% if user.is_authenticated %}
-  <!--Currently only admin is logged in, so account.html always shows username as admin.-->
-  <h2>Your name is: {{user.username}}</h2>
-  {% else %}
-  <h2>You are not logged in.</h2>
-  {% endif %}
+</div>
 
-</body>
-</html>
+
+
+{% endblock %}

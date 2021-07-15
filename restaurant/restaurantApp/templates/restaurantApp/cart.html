@@ -25,20 +25,7 @@
 			border-radius: 50%;
 			display: inline-block;
 		}
-<<<<<<< HEAD
 
-=======
-		.box-element{
-			width:70%;
-			transform:translate(50,0);
-			margin: auto;
-			width: 60%;
-			padding: 10px;
-		}
-		tr{
-			text-align:center;
-		}
->>>>>>> 6d8cbc5d2ecc5fe698051dd3dee45a891a00568b
 		.header {
             background: #000;
             color: #8a8a8a;
@@ -61,7 +48,6 @@
             flex-wrap: wrap;
             justify-content: space-around;
         }
-<<<<<<< HEAD
 
 		.box-element{
 			width:70%;
@@ -73,8 +59,6 @@
 		tr{
 			text-align:center;
 		}
-=======
->>>>>>> 6d8cbc5d2ecc5fe698051dd3dee45a891a00568b
 	</style>
 
 	<script type="text/javascript">
@@ -140,7 +124,6 @@
 
 	  </div>
 	</nav>
-<<<<<<< HEAD
 
 	<div class="header">
         <div class="row">
@@ -149,14 +132,6 @@
     </div>
 
 
-=======
-	<div class="header">
-        <div class="row">
-            <h3 style="color:white">Step 3: View Cart</h3>
-        </div>
-    </div>
-	<br><br><br>
->>>>>>> 6d8cbc5d2ecc5fe698051dd3dee45a891a00568b
 	<div class="row">
 		<div class="col-lg-12">
 			<div class="box-element">
@@ -200,11 +175,7 @@
 							<tr>
 								<td><img class="row-image" src="{{item.menu_item.image.url}}"></td>
 								<td>{{item.menu_item.name}}</td>
-<<<<<<< HEAD
 								<td>${{item.menu_item.price|floatformat:2}}</td>
-=======
-								<td>{{item.menu_item.price|floatformat:2}}</td>
->>>>>>> 6d8cbc5d2ecc5fe698051dd3dee45a891a00568b
 								<td>{{item.quantity}}</td>
 								<td>
 									<div class="quantity">
@@ -213,11 +184,7 @@
 										<img data-menu_item={{item.menu_item.id}} data-action="remove" class="chg-quantity update-cart" src="{% static  'images/arrow-down.png' %}">
 									</div>
 								</td>
-<<<<<<< HEAD
 								<td>${{item.get_total|floatformat:2}}</td>
-=======
-								<td>${{item.get_total}}</td>
->>>>>>> 6d8cbc5d2ecc5fe698051dd3dee45a891a00568b
 							</tr>
 							{% endfor %}
 						</table>

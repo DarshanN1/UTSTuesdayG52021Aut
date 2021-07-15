@@ -2,6 +2,7 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.core.validators import MaxValueValidator, MinValueValidator
 import uuid
+from datetime import date
 
 # Create your models here.
 # null True and blank True are almost the same, except in the case
@@ -20,6 +21,23 @@ class Customer(models.Model):
 	def create(cls,user,name,email):
 		customer = cls(user=user,name=name,phone='',email=email)
 		return customer
+
+class StaffMember(models.Model):
+	user = models.OneToOneField(User, on_delete=models.CASCADE, null=True, blank=True)
+	first_name = models.CharField(max_length=15)
+	last_name = models.CharField(max_length=15)
+	#staffId
+	phone = models.CharField(max_length=10)
+	email = models.CharField(max_length=100)
+
+	def __str__(self):
+		return (self.last_name.upper() + ", " + self.first_name)
+
+	def save(self, *args, **kwargs):
+		if self.user.is_staff:
+			self.email = self.user.email
+			super(StaffMember, self).save(*args,**kwargs)
+
 
 class Restaurant(models.Model):
 	address = models.CharField(max_length=200,null=False)
@@ -55,7 +73,6 @@ class MenuItem(models.Model):
 class Booking(models.Model):
 	"""Assuming a customer can make a single booking at a given time"""
 	customer = models.ForeignKey(Customer,on_delete=models.SET_NULL,null=True, blank=True)
-<<<<<<< HEAD
 	name = models.CharField(max_length=100,null=True,blank=True)
 	phone = models.CharField(max_length=10,null=True)
 	date_created = models.DateField(auto_now_add=True)
@@ -68,7 +85,7 @@ class Booking(models.Model):
             MinValueValidator(1)
         ]
 	)
-	#transaction_id = models.UUIDField(default=uuid.uuid4, unique=True, db_index=True, editable=False)
+
 	booking_ref = models.CharField(max_length=15,null=True,blank=True)
 
 	def __str__(self):
@@ -76,18 +93,21 @@ class Booking(models.Model):
 
 	@classmethod
 	def create(cls,customer,name,phone,given_date,given_time,guests,transaction_id):
-		booking = cls(customer=customer,name=name,phone=phone,booking_date=given_date,booking_time=given_time,complete=True,number_of_guests=guests,booking_ref=transaction_id)
+		booking = cls(customer=customer,name=name,phone=phone,booking_date=given_date,booking_time=given_time,complete=False,number_of_guests=guests,booking_ref=transaction_id)
 		return booking
-=======
-	dt_booking_created = models.DateTimeField(auto_now_add=True)
-	complete = models.BooleanField(default=False,null=True,blank=False)
-	number_of_guests = models.IntegerField()
-	#special_req = models.CharField(max_length=200,null=True,blank=True)
-	transaction_id = models.UUIDField(default=uuid.uuid4, unique=True, db_index=True, editable=False)
 
-	def __str__(self):
-		return self.customer.name
->>>>>>> 6d8cbc5d2ecc5fe698051dd3dee45a891a00568b
+	@property
+	def booking_complete(self):
+		if self.booking_date > date.today():
+			complete = True
+
+	@property
+	def booking_event(self):
+		if self.booking_time.strftime("%H") < "12":
+			return 'Breakfast'
+		elif self.booking_time.strftime("%H") < "17":
+			return 'Lunch'
+		return 'Dinner'
 
 class Table(models.Model):
 	restaurant = models.ForeignKey(Restaurant,on_delete=models.CASCADE)
@@ -109,18 +129,19 @@ class Category(models.Model):
 #or cart itself
 
 class Order(models.Model):
+	id = models.AutoField(primary_key=True)
 	STATUS = (
 		('Pending','Pending'),
 		('Out for delivery','Out for delivery'),
 		('Delivered','Delivered'),
 		('Served','Served'),
+		('Ready for Pickup','Ready for Pickup'),
 	)
 	customer = models.ForeignKey(Customer,null=True,on_delete=models.CASCADE)
-	#menuitem = models.ForeignKey(MenuItem,null=True,on_delete=models.CASCADE)
+	booking = models.OneToOneField(Booking, on_delete=models.CASCADE, null=True, blank=True)
 	date_created = models.DateTimeField(auto_now_add=True)
 	complete = models.BooleanField(default=False,null=True,blank=False)
 	status = models.CharField(max_length=200,null=True,choices=STATUS)
-	transaction_id = models.CharField(max_length=100,null=True)
 
 	def __str__(self):
 		return str(self.id)

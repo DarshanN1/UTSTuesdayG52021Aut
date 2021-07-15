@@ -5,6 +5,7 @@
 
 <br>
 
+
 <div class="row">
 	<div class="col-md-5">
 		<h5>CUSTOMERS:</h5>
@@ -20,7 +21,7 @@
 				{% for customer in customers %}
 					<tr>
 						<td>{{customer.name}}</td>
-						<td>{{customer.phone}}</td>
+						<td>{{customer.email}}</td>
 					</tr>
 				{% endfor %}
 			</table>
@@ -65,5 +66,6 @@
 	</div>
 
 <br>
+
 
 {% endblock %}
