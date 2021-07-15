@@ -5,8 +5,7 @@
     "\\restaurantApp",
     "\\restaurantApp\\templates",
     "\\restaurantApp\\templates\\restaurantApp",
-    "\\static",
-    "\\static\\js"
+    "\\restaurantApp\\templates\\restaurantApp\\includes"
   ],
   "PreviewInSolutionExplorer": false
 }

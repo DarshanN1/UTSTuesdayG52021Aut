@@ -162,6 +162,11 @@
                 </a>
             </li>
             <li><a href="{% url 'logout' %}"> Logout </a></li>
+            {% if request.user.is_staff %}
+            <li><a href="{% url 'dashboard-admin' %}"> Account </a></li>
+            {% else %}
+            <li><a href="{% url 'account' %}"> Account </a></li>
+            {% endif %}
             <li style="float:left"><a href="{% url 'home' %}"> Home </a></li>
             <li style="float:left"><a href="{% url 'viewMenu' %}"> Menu </a></li>
             <li style="float:left"><a href="{% url 'booking' %}"> Booking </a></li>

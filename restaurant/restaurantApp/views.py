@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.db.models import Q
 from .models import *
-from django.http import JsonResponse
+from django.http import JsonResponse, HttpResponse
 import json
 from django.contrib.auth.forms import UserCreationForm
 from .forms import CreateUserForm
@@ -9,6 +9,7 @@ from .forms import BookingForm
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import Group
+from django.db.models.functions import Concat
 from django.contrib import messages
 from .decorators import unauthenticated_user,allowed_user,admin_only
 from .filters import MenuFilter
@@ -19,11 +20,19 @@ from datetime import date
 def menu(request):
 	menu_items = MenuItem.objects.all()
 
+	#only create an order if 1) user is authenticated 2) has a booking
 	if request.user.is_authenticated:
 		customer = request.user.customer
-		order, created = Order.objects.get_or_create(customer=customer,complete=False,status='Pending')
-		items = order.orderitem_set.all()
-		cartItems = order.get_cart_items
+
+		all_bookings = list(Booking.objects.filter(customer=customer))
+		current_bookings = list(filter(lambda booking: (booking.booking_date > date.today()), all_bookings))
+
+		if len(current_bookings) == 1:
+			order, created = Order.objects.get_or_create(customer=customer,booking=current_bookings[0],complete=False,status='Pending')
+			items = order.orderitem_set.all()
+			cartItems = order.get_cart_items
+		else:
+			print("You need to make a booking first. An order can be made subsequently.")
 	else:
 		items = []
 		order = {'get_cart_items':0, 'get_cart_total':0}
@@ -65,19 +74,20 @@ def updateItem(request):
 		print("There was a problem accessing the website data.")
 	return JsonResponse('Oops...',safe=False)
 
+@allowed_user(allowed_roles=['admin','Staff'])
 def dashboard_admin(request):
 	#menu_items = MenuItem.objects.all()
 	orders = Order.objects.all()
 	customers = Customer.objects.all()
 
+	staff_member = StaffMember.objects.all()
 	total_customers = customers.count()
 	total_orders = orders.count()
 	served = orders.filter(status='Served').count()
 	pending = orders.filter(status='Pending').count()
 
-	context = {'orders':orders,'customers':customers,'total_orders':total_orders,'total_customers':total_customers,'served':served,'pending':pending}
+	context = {'orders':orders,'customers':customers,'staff_member':staff_member,'total_orders':total_orders,'total_customers':total_customers,'served':served,'pending':pending}
 	return render(request,'restaurantApp/dashboard-admin.html',context)
-
 
 def mainpg(request):
 	context = {}
@@ -100,7 +110,7 @@ def loginPage(request):
 		#if authenticated
 		if user is not None:
 			login(request,user)
-			return redirect('loggedUser')
+			return redirect('home')
 		else:
 			messages.info(request,'Username or password is incorrect.')
 		
@@ -133,6 +143,16 @@ def registration(request):
 	context = {'form': form}
 	return render(request,'restaurantApp/registration.html',context)
 
+def addStaff(request):
+	form = StaffForm()
+	if request.method == 'POST':
+		staff_reg_form = StaffForm(request.POST)
+		staff_name = form.cleaned_data.get('first_name')
+		if form.is_valid():
+			staff_member = form.save()
+			messages.success(request,'New staff account created for ' + staff_name)
+			return redirect('dashboard-admin')
+
 @login_required(login_url='login')
 def booking(request):
 	booking_form = BookingForm()
@@ -145,14 +165,38 @@ def booking(request):
 			booking_date = booking_form.cleaned_data.get('booking_date')
 			booking_time = booking_form.cleaned_data.get('booking_time')
 			number_of_guests = booking_form.cleaned_data.get('number_of_guests')
-			booking = Booking.create(customer,name,phone,booking_date,booking_time,number_of_guests)
-			booking.save()
-			return redirect('menu')
+
+			bdate = str(booking_date)
+			btime = booking_time.strftime('%H:%M')
+			bdate = bdate.replace('-','')
+			btime = btime.replace(':','')
+			num_guests = str(number_of_guests)
+			initials = ''.join([x[0] for x in name.split()])
+			initials = initials.upper()
+			transaction_id = initials + bdate + btime + num_guests
+
+			prev_bookings = Booking.objects.filter(customer=customer, booking_date__range=["2021-01-01", date.today()])
+			all_bookings = Booking.objects.filter(customer=customer)
+			#if no new bookings exist, only then can a user make a booking
+			if(all_bookings.count() - prev_bookings.count() == 0):
+				booking = Booking.create(customer,name,phone,booking_date,booking_time,number_of_guests,transaction_id)
+				booking.save()
+				return redirect('menu')
+			else:
+				messages.warning(request,'A booking already exists under your account. Please try again another time.')
 	context = {'booking_form':booking_form}	 
 	return render(request,'restaurantApp/booking.html',context)
 
+@login_required(login_url='login')
+@allowed_user(allowed_roles=['customer'])
 def account(request):
-	return render(request,'restaurantApp/account.html')
+	customer = request.user.customer
+	all_bookings = list(Booking.objects.filter(customer=customer))
+	prev_bookings = list(filter(lambda booking: (booking.booking_date < date.today()), all_bookings))
+	next_booking = list(filter(lambda booking: (booking not in prev_bookings), all_bookings))
+
+	context = {'prev_bookings':prev_bookings,'next_booking':next_booking}
+	return render(request,'restaurantApp/account.html',context)
 
 
 def restaurants(request):
@@ -167,8 +211,7 @@ def checkout(request):
 	if request.user.is_authenticated:
 		customer = request.user.customer
 		order, created = Order.objects.get_or_create(customer=customer,complete=False,status='Pending')
-		#booking, created = Booking.objects.get_or_create(customer=customer,transaction_id='2348750401')
-		booking = Booking.objects.get(customer=customer,date_created=date.today() )
+		booking = Booking.objects.get(customer=customer,date_created=date.today())
 		items = order.orderitem_set.all()
 	else:
 		items = []
@@ -199,5 +242,8 @@ def test(request):
 
 def viewMenu(request):
 	menu_items = MenuItem.objects.all()
-	context = {'menu_items' : menu_items}
+	itemFilter = MenuFilter(request.GET,queryset=menu_items)
+	menu_items = itemFilter.qs
+
+	context = {'menu_items' : menu_items, 'itemFilter':itemFilter}
 	return render(request,'restaurantApp/viewMenu.html',context)

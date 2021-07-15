@@ -5,7 +5,9 @@
 
 <br>
 
+
 <div class="row">
+	{% if request.user.is_superuser %}
 	<div class="col-md-5">
 		<h5>CUSTOMERS:</h5>
 		<hr>
@@ -16,16 +18,16 @@
 					<th>Customer</th>
 					<th>Phone Number</th>
 				</tr>
-
 				{% for customer in customers %}
-					<tr>
-						<td>{{customer.name}}</td>
-						<td>{{customer.phone}}</td>
-					</tr>
+				<tr>
+					<td>{{customer.name}}</td>
+					<td>{{customer.email}}</td>
+				</tr>
 				{% endfor %}
 			</table>
 		</div>
 	</div>
+	{% endif %}
 
 	<div class="col-md-7">
 		<h5>BOOKINGS FOR NEXT WEEK:</h5>
@@ -42,20 +44,20 @@
 				</tr>
 
 				{% for order in orders %}
-					<tr>
-						<td>{{order.customer.name}}</td>
-						<td>{{order.date_created}}</td>
-						<td>{{order.status}}</td>
-						<td><a href="">Update</a></td>
-						<td><a href="">Remove</a></td>
-					</tr>
+				<tr>
+					<td>{{order.customer.name}}</td>
+					<td>{{order.date_created}}</td>
+					<td>{{order.status}}</td>
+					<td><a href="">Update</a></td>
+					<td><a href="">Remove</a></td>
+				</tr>
 				{% endfor %}
 			</table>
 		</div>
 	</div>
 
 </div>
-
+	{% if request.user.is_superuser %}
 	<div class="col-md-5">
 		<h5>Financial reporting for this month:</h5>
 		<div class="card card-body">
@@ -63,7 +65,8 @@
 
 		</div>
 	</div>
-
+	{% endif %}
 <br>
+
 
 {% endblock %}
